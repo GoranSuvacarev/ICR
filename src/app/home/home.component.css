@@ -1,0 +1,101 @@
+.poster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-top: 40px;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.poster_image {
+  max-width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.movies {
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.movie {
+  width: calc(25% - 20px);
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.movie-details {
+  margin-top: auto;
+  font-size: 1.3rem;
+}
+
+.movie:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search_form{
+  min-width: 200px;
+  max-width: 240px;
+  width: 100%;
+}
+
+.search_input{
+  width: 100%;
+}
+
+.genre-width{
+  width: 240px;
+}
+
+.glumci-width{
+  width: 240px;
+}
+
+.reziseri-width{
+  width: 240px;
+}
+
+.reset{
+  padding-bottom: 15px;
+}
+
+.reset button{
+  height: 50px;
+  font-size: 1.1rem;
+}

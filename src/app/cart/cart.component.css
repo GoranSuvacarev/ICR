@@ -1,0 +1,131 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 90%;
+  margin: 2rem auto;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 30px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+table.mat-elevation-z8 {
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mat-mdc-table .mat-mdc-cell,
+.mat-mdc-table .mat-mdc-header-cell {
+  font-size: 1.2rem !important;
+}
+
+th, td {
+  padding: 16px;
+  text-align: center;
+}
+
+div {
+  border-radius: 20px;
+}
+
+h1{
+  padding-left: 20px;
+    text-transform: uppercase;
+    font-size: 3em;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1.5s ease-out forwards;
+    color: #fff;
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(47, 46, 46, 0.8),
+        0 0 5px rgba(98, 98, 98, 0.8);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.total-price-card {
+    margin-top: 30px;
+    padding: 10px;
+    background: #141313;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(14, 14, 14, 0.2);
+    width: 250px;
+    margin-right: auto;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.price-icon {
+    font-size: 30px;
+    color: #ffd700;
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 1.3rem;
+    color: white;
+}
+
+.total-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+:host ::ng-deep .success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+:host ::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+:host ::ng-deep .success-snackbar .mat-mdc-button,
+:host ::ng-deep .error-snackbar .mat-mdc-button {
+  color: white;
+}
+

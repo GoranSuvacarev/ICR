@@ -1,0 +1,163 @@
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.movie-details {
+  margin-top: 2rem;
+}
+
+.movie-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.poster-container {
+  flex-shrink: 0;
+}
+
+.movie-poster {
+  width: 450px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.movie-info {
+  flex-grow: 1;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-meta {
+  color: #b3b3b3;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.separator {
+  margin: 0 0.8rem;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+  font-size: 1.5rem;
+}
+
+.genre-tag {
+  background-color: #101414;
+  padding: 0.3rem 0.8rem;
+  border-radius: 16px;
+  font-size: 1.2rem;
+}
+
+.director {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.cast{
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.plot {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.show-more-button {
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.screening-section {
+  margin-bottom: 2rem;
+}
+
+.screening-section h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.screening-times {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.screening-card {
+  min-width: 150px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex: 1;
+}
+
+.screening-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.screening-content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.screening-type {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.screening-time {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.screening-hall {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.screening-price {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+:host ::ng-deep .success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+:host ::ng-deep .error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+:host ::ng-deep .success-snackbar .mat-mdc-button,
+:host ::ng-deep .error-snackbar .mat-mdc-button {
+  color: white;
+}
+
+.wrong{
+  display: flex;
+  justify-content: center;
+}

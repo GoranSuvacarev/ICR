@@ -1,0 +1,98 @@
+<div *ngIf="error" class="wrong">
+    <mat-card class="loading" appearance="outlined" color="red">
+        <mat-card-content>
+          <h1 style="color: red;">Došlo je do greške!</h1>
+          <button mat-raised-button routerLink="/movies">Nazad na početnu stranu</button>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<app-loading *ngIf="!movie && !error"></app-loading>
+
+
+<div class="container" *ngIf="movie">
+  <div *ngIf="movie" class="movie-details">
+    <div class="movie-header">
+
+      <div class="poster-container">
+        <img [src]="movie.poster" [alt]="movie.title" class="movie-poster">
+      </div>
+
+      <div class="movie-info">
+
+        <h1 class="movie-title"> {{movie.title}}</h1>
+
+        <div class="movie-meta">
+          <span class="release-date">{{ utils.formatDate(movie.startDate) }}</span>
+          <span class="separator">•</span>
+          <span class="runtime">{{ utils.formatRuntime(movie.runTime) }}</span>
+          <span class="separator">•</span>
+          <span class="rating"><i class="fa-solid fa-star"></i>{{calculateRating()}}</span>
+        </div>
+
+        <div class="genres">
+          <strong>Žanr: </strong>
+          <span *ngFor="let genre of movie?.movieGenres; let i = index" class="genre-tag">{{ genre?.genre?.name }}</span>
+        </div>
+
+        <div class="director">
+          <strong>Režiser: </strong> {{movie.director.name}}
+        </div>
+
+        <div class="cast">
+          <strong>Uloge: </strong>
+          <span *ngFor="let actor of movie?.movieActors; let i = index">{{ actor?.actor?.name }}<span *ngIf="i < (movie?.movieActors?.length || 0) - 1">, </span></span>
+        </div>
+
+        <div class="plot">
+          <p>{{ getTruncatedDescription() }}</p>
+          <button mat-raised-button
+            *ngIf="shouldShowMoreButton()"
+            class="show-more-button"
+            (click)="toggleDescription()">
+            {{ isDescriptionExpanded ? 'Prikaži manje' : 'Prikaži više' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="movie">
+
+  <div class="screening-section">
+    <h2>Projekcije</h2>
+
+    <div class="screening-times">
+      <mat-card class="screening-card" (click)="bookTicket('15:00', 550)" >
+        <mat-card-content class="screening-content">
+          <div class="screening-type">2D - SINH</div>
+          <div class="screening-time">15:00</div>
+          <div class="screening-hall">Sala 2</div>
+          <div class="screening-price">550 RSD</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="screening-card" >
+        <mat-card-content class="screening-content" (click)="bookTicket('19:30', 700)">
+          <div class="screening-type">2D - TITL</div>
+          <div class="screening-time">19:30</div>
+          <div class="screening-hall">Sala 2</div>
+          <div class="screening-price">700 RSD</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="screening-card" >
+        <mat-card-content class="screening-content" (click)="bookTicket('21:15', 900)">
+          <div class="screening-type">3D - TITL</div>
+          <div class="screening-time">21:15</div>
+          <div class="screening-hall">Sala 1</div>
+          <div class="screening-price">900 RSD</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+

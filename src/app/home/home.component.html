@@ -1,0 +1,72 @@
+<div *ngIf="error" class="container">
+    <mat-card class="loading" appearance="outlined" color="red">
+        <mat-card-content>
+            <h1>Oops, an error occurred!</h1>
+            <p style="color: red;">{{error}}</p>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<app-loading *ngIf="!movies && !error" />
+
+<div class="poster">
+  <img  mat-card-image src="/poster.jpg" class="poster_image">
+</div>
+
+<div class="filter">
+  <div class="search_form">
+    <mat-form-field class="search_input">
+      <mat-label><i class="fa-solid fa-magnifying-glass"></i> Pretraga</mat-label>
+      <input matInput type="text" placeholder="Unesite naziv filma..." (keyup)="doFilter()" [(ngModel)]="userInput" >
+    </mat-form-field>
+  </div>
+
+  <div class="genre_form">
+    <mat-form-field class="genre-width">
+      <mat-label>Žanrovi</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="genre">
+        <mat-option *ngFor="let genre of genreNames" [value]="genre">
+          {{genre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="genre_form">
+    <mat-form-field class="glumci-width">
+      <mat-label>Glumci</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedActor">
+        <mat-option *ngFor="let selectedActor of actorNames" [value]="selectedActor">
+          {{selectedActor}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="genre_form">
+    <mat-form-field class="reziseri-width">
+      <mat-label>Režiseri</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedDirector">
+        <mat-option *ngFor="let selectedDirector of directorNames" [value]="selectedDirector">
+          {{selectedDirector}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="reset">
+    <button (click)="resetFilter()" mat-raised-button>Resetuj filtere</button>
+  </div>
+</div>
+
+<div *ngIf="movies" class="movies">
+  <mat-card class="movie" appearance="outlined" *ngFor="let movie of filteredMovies" (click)="goToDetails(movie.shortUrl)">
+    <img mat-card-image [src]="movie.poster" [alt]="movie.title">
+    <mat-card-content>
+      <h1 class="naslov">{{movie.title}}</h1>
+      <div class="movie-details">
+        <p><strong>Početak prikazivanja:</strong> {{utils.formatDate(movie.startDate)}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

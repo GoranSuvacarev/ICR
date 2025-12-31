@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <mat-toolbar color="primary" class="header">
+    <a routerLink="/" mat-button>
+      <span><i class="fa-solid fa-clapperboard"></i> Eclipse Cinemas</span>
+    </a>
+
+    <span class="spacer"></span>
+
+    <a routerLink="/login" mat-button *ngIf="!service.getActiveUser()">
+      <i class="fa-solid fa-right-to-bracket"></i> Prijava
+    </a>
+
+    <a routerLink="/cart" mat-button *ngIf="service.getActiveUser()">
+      <i class="fa-solid fa-cart-shopping"></i> Korpa
+    </a>
+
+    <a routerLink="/user" mat-button *ngIf="service.getActiveUser()">
+      <i class="fa-solid fa-user"></i> Profil
+    </a>
+
+    <button mat-button *ngIf="service.getActiveUser()" (click)="doLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Odjavi se
+    </button>
+  </mat-toolbar>
+
+  <div class="content">
+    <router-outlet></router-outlet> 
+  </div>
+
+  <mat-toolbar color="primary" class="footer">
+    <span>© 2025 Eclipse Cinemas</span>
+    <span class="spacer"></span>
+    <a mat-button href="#">Terms of Service</a>
+  </mat-toolbar>
+</div>

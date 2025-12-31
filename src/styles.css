@@ -1,0 +1,29 @@
+html, body {
+  max-width: 100%;
+  background-color: #1e2124;
+  color: white;
+  margin: 0;
+}
+
+body, p, h1, h2, h3, h4, h5, h6, span, a, div, table, tr, th, td {
+  font-family: Palatino Linotype, "Palatino Linotype", sans-serif !important;
+}
+
+a {
+  color: white;
+  text-decoration: none
+}
+
+.loading {
+  text-align: center;
+  width: 600px;
+  height: 300px;
+  align-items: center;
+}
+
+.auth-card {
+  margin-top: 30px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
