@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { MovieService } from '../../services/movie.service';
-import { NgFor, NgIf } from '@angular/common';
+import { formatDate, NgFor, NgIf } from '@angular/common';
 import { AxiosError } from 'axios';
-import { MovieModel } from '../../models/movie.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { UtilsService } from '../../services/utils.service';
@@ -11,14 +9,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {GenreModel} from '../../models/genre.model';
-import { ActorModel } from '../../models/actor.model';
-import { DirectorModel } from '../../models/director.model';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { ToyModel } from '../../models/toy.model';
+import { TypeModel } from '../../models/type.model';
+import { ToyService } from '../../services/toy.service';
+import { AgeGroupModel } from '../../models/ageGroup.model';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-home',
-  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, LoadingComponent, FormsModule, MatFormFieldModule, MatInputModule, MatSelect, MatOption],
+  imports: [NgIf, NgFor, MatButtonModule, MatCardModule, LoadingComponent, FormsModule, MatFormFieldModule, MatInputModule, MatSelect, MatOption, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -26,109 +27,134 @@ export class HomeComponent {
 
   public error: string | null = null;
 
-  public movies: MovieModel[] | null = null;
-  public filteredMovies : MovieModel [] | null = null
+  public toys: ToyModel[] | null = null;
+  public filteredToys : ToyModel [] | null = null
   
-  public genres: GenreModel[] = []
-  public genreNames : string[] = []
+  public types: TypeModel[] = []
+  public typeNames : string[] = []
 
-  public actors: ActorModel[] = []
-  public actorNames: string[] = []
+  public ageGroups: AgeGroupModel[] = []
+  public ageGroupNames: string[] = []
+
+  public targetGroupNames: string[] = ["svi", "dečak", "devojčica"]
+
+  public ratings: number[] = [1, 2, 3, 4, 5]
   
-  public directors : DirectorModel[] = []
-  public directorNames : string[] = []
-
-  public selectedActor : string = ''
-  public selectedDirector : string = ''
-  public genre = ''
   public userInput: string = ''
+  public descInput: string = ''
+  public selectedType = ''
+  public selectedAgeGroup: string = ''
+  public selectedTargetGroup: string = ''
+  public dateFrom: Date | null = null
+  public dateTo: Date | null = null
+  public priceInput: string = ''
+  public selectedRating: number = 0
 
   constructor(public utils: UtilsService, private router: Router) {
-    MovieService.getMovies()
+    ToyService.getToys()
       .then(rsp => {
-        this.movies = rsp.data.slice(0,24)
-        this.filteredMovies = this.movies
+        this.toys = rsp.data
+        for (let toy of this.toys!) {
+          toy.rating = utils.calculateRating(toy)
+        }
+        this.filteredToys = this.toys
       })
       .catch((e: AxiosError) => this.error = `${e.code}: ${e.message}`);
 
-    MovieService.getGenres()
+    ToyService.getTypes()
       .then(rsp => {
-        this.genres = rsp.data;
+        this.types = rsp.data;
 
-        for (let genre of this.genres) {
-          let name = genre.name;
-          this.genreNames.push(name);
+        for (let type of this.types) {
+          let name = type.name;
+          this.typeNames.push(name);
         }
       })
 
-      MovieService.getActors()
+      ToyService.getAgeGroups()
       .then(rsp => {
-        this.actors = rsp.data;
+        this.ageGroups = rsp.data;
 
-        for (let actor of this.actors) {
-          let name = actor.name;
-          this.actorNames.push(name);
+        for (let ageGroup of this.ageGroups) {
+          let name = ageGroup.name;
+          this.ageGroupNames.push(name);
         }
 
-        this.actorNames.sort()
-      })
-
-      MovieService.getDirectors()
-      .then(rsp => {
-        this.directors = rsp.data;
-
-        for (let director of this.directors) {
-          let name = director.name;
-          this.directorNames.push(name);
-        }
       })
   }
 
-  goToDetails(shortUrl: string) {
-    this.router.navigate(['/details', shortUrl]);
+  goToDetails(permalink: string) {
+    this.router.navigate(['/details', permalink]);
   }
 
   public doFilter() {
-    if (this.movies == null) return
+    if (this.toys == null) return
 
-    this.filteredMovies = this.movies!
+    this.filteredToys = this.toys!
       .filter(obj => {
         if (this.userInput == '') return true
-        return obj.title.toLowerCase().includes(this.userInput.toLowerCase())
+        return obj.name.toLowerCase().includes(this.userInput.toLowerCase())
       })
       .filter(obj => {
-        if(this.genre == '') return true
-        for(let g of obj.movieGenres){
-          if (g.genre.name == this.genre){
+        if (this.descInput == '') return true
+        return obj.description.toLowerCase().includes(this.descInput.toLowerCase())
+      })
+      .filter(obj => {
+        if(this.selectedType == '') return true
+          if (obj.type.name == this.selectedType){
             return true
           }
-        }
         return false
       })
       .filter(obj => {
-        if(this.selectedActor == '') return true
-        for(let g of obj.movieActors){
-          if (g.actor.name == this.selectedActor){
-            return true
-          }
-        }
-        return false
-      })
-      .filter(obj => {
-        if(this.selectedDirector == '') return true
-        if(obj.director.name == this.selectedDirector){
+        if(this.selectedAgeGroup == '') return true
+        if (obj.ageGroup.name == this.selectedAgeGroup){
           return true
         }
         return false
       })
+      .filter(obj => {
+        if(this.selectedTargetGroup == '') return true
+        if (obj.targetGroup == this.selectedTargetGroup){
+          return true
+        }
+        return false
+      })
+      .filter(obj => {
+        const date = new Date(obj.productionDate)
+        if (this.dateFrom && date < this.dateFrom) return false;
+        if (this.dateTo && date > this.dateTo) return false;
+
+        return true;
+      })
+      .filter(obj => {
+        if(this.priceInput === '') return true
+        if (obj.price <= Number(this.priceInput)){
+          return true
+        }
+        return false
+      })
+      .filter(obj => {
+        if(this.selectedRating == 0) return true
+        if (obj.rating == this.selectedRating){
+          return true
+        }
+        return false
+      })
+      
   }
 
   resetFilter(){
     this.userInput = ''
-    this.genre = ''
-    this.selectedActor = ''
-    this.selectedDirector = ''
-    this.filteredMovies = this.movies
+    this.descInput = ''
+    this.selectedType = ''
+    this.selectedAgeGroup = ''
+    this.selectedTargetGroup = ''
+    this.dateFrom = null
+    this.dateTo = null
+    this.priceInput = ''
+    this.selectedRating = 0;
+    this.filteredToys = this.toys
   }
 }
 

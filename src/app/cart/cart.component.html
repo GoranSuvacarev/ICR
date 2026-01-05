@@ -8,26 +8,53 @@
         <div>
             <h1><i class="fa-solid fa-cart-shopping"></i> KORPA</h1>
             <table mat-table [dataSource]="cart!" class="mat-elevation-z8">
-                <ng-container matColumnDef="title">
+                <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef>
-                      <i class="fa-solid fa-pen-nib"></i> Naslov
+                      <i class="fa-solid fa-pen-nib"></i> Naziv
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="runTime">
+                <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef>
-                        <i class="fa-solid fa-clock"></i>  Dužina trajanja filma
+                        <i class="fa-solid fa-clock"></i>  Opis
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{utils.formatRuntime(element.runTime)}}</td>
+                    <td mat-cell *matCellDef="let element"> {{ element.description }}</td>
                 </ng-container>
 
-                <ng-container matColumnDef="scheduledAt">
+                <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef>
-                        <i class="fa-solid fa-calendar-days"></i> Početak projekcije
+                        <i class="fa-solid fa-calendar-days"></i> Tip
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{element.scheduledAt}}
+                        {{element.type}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ageGroup">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <i class="fa-solid fa-calendar-days"></i> Uzrast
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.ageGroup}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="targetGroup">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <i class="fa-solid fa-calendar-days"></i> Ciljna grupa
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.targetGroup}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="productionDate">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <i class="fa-solid fa-calendar-days"></i> Datum proizvodnje
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.productionDate}}
                     </td>
                 </ng-container>
 
@@ -40,17 +67,38 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <i class="fa-solid fa-ticket"></i>  Status
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.status}}
+                    </td>
+                </ng-container>
+
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef>
                       <i class="fa-solid fa-handshake"></i>  Potvrda
                     </th>
                     <td mat-cell *matCellDef="let element" class="actions">
-                        <div>
+                        <div *ngIf="element.status == 'rezervisano'">
                             <button type="button" mat-button (click)="doPay(element)">
                                 <i class="fa-solid fa-cart-shopping"></i> Plati
                             </button>
                             <button type="button" mat-button (click)="doCancel(element)">
                                 <i class="fa-solid fa-ban"></i> Otkaži
+                            </button>
+                        </div>
+                        <div *ngIf="element.status == 'pristiglo'">
+                            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                            <i
+                                class="fa-solid fa-star"
+                                [ngClass]="{'checked': element.rating >= star}"
+                                (click)="doRating(element, star)">
+                            </i>
+                            </ng-container>
+                            <button type="button" mat-button (click)="doRemove(element)">
+                                <i class="fa-solid fa-ban"></i> Obrisi
                             </button>
                         </div>
                     </td>

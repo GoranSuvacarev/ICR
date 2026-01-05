@@ -5,7 +5,7 @@
             <img mat-card-avatar [src]="['https://ui-avatars.com/api/?name='+user.email]">
             <mat-card-title>{{user.username}}</mat-card-title>
             <mat-card-subtitle>
-                <p class="no-border"><strong>Omiljeni žanr : </strong> {{user.favoriteGenre}}</p>
+                <p class="no-border"><strong>Omiljeni žanr : </strong> {{user.favoriteType}}</p>
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="user-card-content">
@@ -57,9 +57,9 @@
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>Omiljeni žanr</mat-label>
-                  <mat-select [(ngModel)]="copyUser!.favoriteGenre">
-                      <mat-option *ngFor="let genre of genreNames" [value]="genre">
-                          {{genre}}
+                  <mat-select [(ngModel)]="copyUser!.favoriteType">
+                      <mat-option *ngFor="let type of typeNames" [value]="type">
+                          {{ type }}
                       </mat-option>
                   </mat-select>
               </mat-form-field>
@@ -72,16 +72,16 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card appearance="outlined" *ngIf="watchedMovies!.length == 0" class="no-order">
+    <!-- <mat-card appearance="outlined" *ngIf="reservedToys!.length == 0" class="no-order">
         <mat-card-content>
-            <h1>Nisi pogledao ni jedan film!</h1>
+            <h1>Nisi rezervisao ni jednu igracku!</h1>
         </mat-card-content>
     </mat-card>
 
-    <div *ngIf="watchedMovies!.length > 0">
+    <div *ngIf="reservedToys!.length > 0">
         <div>
-            <h1>Pogledani filmovi</h1>
-            <table mat-table [dataSource]="watchedMovies!" class="mat-elevation-z8">
+            <h1>Rezervisane igracke</h1>
+            <table mat-table [dataSource]="reservedToys!" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="title">
                     <th mat-header-cell *matHeaderCellDef>
@@ -133,5 +133,5 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-    </div>
+    </div> -->
 </div>

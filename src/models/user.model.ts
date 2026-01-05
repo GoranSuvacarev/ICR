@@ -1,11 +1,11 @@
-import { TicketModel } from "./ticket.model"
+import { ReservationModel } from "./reservation.model"
 
 export interface UserModel {
     email: string
     username: string
     phone: string
     address: string
-    favoriteGenre: string
+    favoriteType: string
     password: string
-    tickets: TicketModel[]
+    reservations: ReservationModel[]
 }

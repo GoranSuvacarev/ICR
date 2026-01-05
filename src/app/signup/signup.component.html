@@ -5,9 +5,9 @@
     <mat-card-content>
       <mat-form-field class="full-width">
         <mat-label>Odaberi omiljeni žanr</mat-label>
-        <mat-select [(ngModel)]="genre">
-          <mat-option *ngFor="let genre of genreNames" [value]="genre">
-            {{genre}}
+        <mat-select [(ngModel)]="type">
+          <mat-option *ngFor="let type of typeNames" [value]="type">
+            {{type}}
           </mat-option>
         </mat-select>
       </mat-form-field>

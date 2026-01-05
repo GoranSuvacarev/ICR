@@ -7,7 +7,7 @@
     </mat-card>
 </div>
 
-<app-loading *ngIf="!movies && !error" />
+<app-loading *ngIf="!toys && !error" />
 
 <div class="poster">
   <img  mat-card-image src="/poster.jpg" class="poster_image">
@@ -21,12 +21,19 @@
     </mat-form-field>
   </div>
 
+  <div class="search_form">
+    <mat-form-field class="search_input">
+      <mat-label><i class="fa-solid fa-magnifying-glass"></i> Opis</mat-label>
+      <input matInput type="text" placeholder="Unesite naziv filma..." (keyup)="doFilter()" [(ngModel)]="descInput" >
+    </mat-form-field>
+  </div>
+
   <div class="genre_form">
     <mat-form-field class="genre-width">
-      <mat-label>Žanrovi</mat-label>
-      <mat-select (selectionChange)="doFilter()" [(ngModel)]="genre">
-        <mat-option *ngFor="let genre of genreNames" [value]="genre">
-          {{genre}}
+      <mat-label>Tipovi</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedType">
+        <mat-option *ngFor="let type of typeNames" [value]="type">
+          {{type}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -34,21 +41,54 @@
 
   <div class="genre_form">
     <mat-form-field class="glumci-width">
-      <mat-label>Glumci</mat-label>
-      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedActor">
-        <mat-option *ngFor="let selectedActor of actorNames" [value]="selectedActor">
-          {{selectedActor}}
+      <mat-label>Godina</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedAgeGroup">
+        <mat-option *ngFor="let selectedAgeGroup of ageGroupNames" [value]="selectedAgeGroup">
+          {{selectedAgeGroup}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div class="genre_form">
-    <mat-form-field class="reziseri-width">
-      <mat-label>Režiseri</mat-label>
-      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedDirector">
-        <mat-option *ngFor="let selectedDirector of directorNames" [value]="selectedDirector">
-          {{selectedDirector}}
+    <mat-form-field class="glumci-width">
+      <mat-label>Target group</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedTargetGroup">
+        <mat-option *ngFor="let selectedTargetGroup of targetGroupNames" [value]="selectedTargetGroup">
+          {{selectedTargetGroup}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="search_form">
+    <mat-form-field class="search_input">
+      <mat-label>Period</mat-label>
+
+      <mat-date-range-input [rangePicker]="rangePicker">
+        <input matStartDate placeholder="Od" [(ngModel)]="dateFrom" (dateChange)="doFilter()">
+        <input matEndDate placeholder="Do" [(ngModel)]="dateTo" (dateChange)="doFilter()">
+      </mat-date-range-input>
+
+      <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #rangePicker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+
+
+  <div class="search_form">
+    <mat-form-field class="search_input">
+      <mat-label><i class="fa-solid fa-magnifying-glass"></i> Do koliko dinara</mat-label>
+      <input matInput type="number" (keyup)="doFilter()" [(ngModel)]="priceInput" >
+    </mat-form-field>
+  </div>
+
+  <div class="genre_form">
+    <mat-form-field class="glumci-width">
+      <mat-label>Ocena</mat-label>
+      <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedRating">
+        <mat-option *ngFor="let selectedRating of ratings" [value]="selectedRating">
+          {{selectedRating}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -59,14 +99,16 @@
   </div>
 </div>
 
-<div *ngIf="movies" class="movies">
-  <mat-card class="movie" appearance="outlined" *ngFor="let movie of filteredMovies" (click)="goToDetails(movie.shortUrl)">
-    <img mat-card-image [src]="movie.poster" [alt]="movie.title">
+<div *ngIf="toys" class="movies">
+  <mat-card class="movie" appearance="outlined" *ngFor="let toy of filteredToys" (click)="goToDetails(toy.permalink)">
+    <img mat-card-image [src]="toy.imageUrl" [alt]="toy.name">
     <mat-card-content>
-      <h1 class="naslov">{{movie.title}}</h1>
-      <div class="movie-details">
-        <p><strong>Početak prikazivanja:</strong> {{utils.formatDate(movie.startDate)}}</p>
-      </div>
+      <h1 class="naslov">{{toy.name}}</h1>
+      <p> {{ toy.description }} </p>
+      <p> {{ toy.price }} </p>
+      <p> {{ toy.type.name }} </p>
+      <p> {{ toy.ageGroup.name }} </p>
+      <p> {{ toy.productionDate }}</p>
     </mat-card-content>
   </mat-card>
 </div>

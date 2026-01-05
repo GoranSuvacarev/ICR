@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { UserModel } from '../../models/user.model';
 import { MatTableModule } from '@angular/material/table';
-import { TicketModel } from '../../models/ticket.model';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,9 +14,10 @@ import { NgClass } from '@angular/common';
 import { NgFor } from '@angular/common';
 import {UtilsService} from '../../services/utils.service';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {GenreModel} from '../../models/genre.model';
 import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
-import { MovieService } from '../../services/movie.service';
+import { TypeModel } from '../../models/type.model';
+import { ReservationModel } from '../../models/reservation.model';
+import { ToyService } from '../../services/toy.service';
 
 @Component({
   selector: 'app-user',
@@ -31,7 +31,7 @@ import { MovieService } from '../../services/movie.service';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    NgClass,
+    // NgClass,
     NgFor,
     MatSelect,
     MatOption,
@@ -44,17 +44,15 @@ export class UserComponent {
   public displayedColumns: string[] = ['title', 'runTime', 'scheduledAt', 'price','rating'];
   public user: UserModel | null = null
   public copyUser : UserModel | null = null
-  public watchedMovies: TicketModel[] | null = null
-
-
+  public reservedToys: ReservationModel[] | null = null
 
   public oldPasswordValue = ''
   public newPasswordValue = ''
   public repeatPasswordValue = ''
 
-  public genres : GenreModel[] = []
-  public genreNames : string[] = []
-  public genre = ''
+  public types : TypeModel[] = []
+  public typeNames : string[] = []
+  public type = ''
 
   constructor(private router: Router,  public utils: UtilsService, private snackBar: MatSnackBar) {
     if (!UserService.getActiveUser()) {
@@ -62,13 +60,13 @@ export class UserComponent {
       return
     }
 
-    MovieService.getGenres()
+    ToyService.getTypes()
           .then(rsp => {
-            this.genres = rsp.data;
+            this.types = rsp.data;
 
-            for (let genre of this.genres) {
-              let name = genre.name;
-              this.genreNames.push(name);
+            for (let type of this.types) {
+              let name = type.name;
+              this.typeNames.push(name);
             }
           })
 
@@ -113,8 +111,8 @@ export class UserComponent {
     this.utils.showSnackBar('Korisničke informacije uspešno ažurirane', 'success', this.snackBar);
   }
 
-  public doRating(ticket: TicketModel, rating: number) {
-    if (UserService.changeRating(rating, ticket.id)) {
+  public doRating(reservation: ReservationModel, rating: number) {
+    if (UserService.changeRating(rating, reservation.id)) {
       this.loadProfile();
       this.utils.showSnackBar('Ocena je uspešno dodata', 'success', this.snackBar);
     } else {
@@ -125,6 +123,6 @@ export class UserComponent {
   public loadProfile(){
     this.user = UserService.getActiveUser()
     this.copyUser = UserService.getActiveUser()
-    this.watchedMovies = this.user?.tickets.filter(ticket => ticket.status === "watched") || [];
+    this.reservedToys = this.user?.reservations.filter(reservation => reservation.status === "rezervisano") || [];
   }
 }

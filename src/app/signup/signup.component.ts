@@ -5,13 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { MovieService } from '../../services/movie.service';
 import { MatSelectModule } from '@angular/material/select';
 import { NgFor } from '@angular/common';
 import { UserService } from '../../services/user.service';
-import { GenreModel } from '../../models/genre.model';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import {UtilsService} from '../../services/utils.service';
+import { ToyService } from '../../services/toy.service';
+import { TypeModel } from '../../models/type.model';
 
 @Component({
   selector: 'app-signup',
@@ -21,24 +21,24 @@ import {UtilsService} from '../../services/utils.service';
 })
 export class SignupComponent {
 
-  public genres: GenreModel[] = []
-  public genreNames : string[] = []
+  public types: TypeModel[] = []
+  public typeNames : string[] = []
   public email = ''
   public password = ''
   public repeatPassword = ''
   public username = ''
   public phone = ''
   public address = ''
-  public genre = ''
+  public type = ''
 
   public constructor(private router: Router, public utils: UtilsService, private snackBar: MatSnackBar) {
-    MovieService.getGenres()
+    ToyService.getTypes()
       .then(rsp => {
-        this.genres = rsp.data;
+        this.types = rsp.data;
 
-        for (let genre of this.genres) {
-          let name = genre.name;
-          this.genreNames.push(name);
+        for (let type of this.types) {
+          let name = type.name;
+          this.typeNames.push(name);
         }
       })
   }
@@ -60,8 +60,8 @@ export class SignupComponent {
       username: this.username,
       phone: this.phone,
       address: this.address,
-      favoriteGenre: this.genre,
-      tickets: []
+      favoriteType: this.type,
+      reservations: []
     });
 
     if (result) {

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from './user.service';
+import { ToyModel } from '../models/toy.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,25 @@ export class UtilsService {
     };
 
     bar.open(message, 'Zatvori', config);
+  }
+
+  public calculateRating(toy: ToyModel){
+    let rating: number = 0
+    let users = UserService.retrieveUsers()
+    let reviewCount: number = 0
+
+    for(let user of users){
+      for(let reservation of user.reservations){
+        if(reservation.rating != 0){
+          if(reservation.name == toy.name){
+            rating += reservation.rating!
+            reviewCount++
+          }
+        }
+      }
+    }
+
+    return Math.round(rating/reviewCount)
   }
 }
 

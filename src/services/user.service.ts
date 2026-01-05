@@ -1,4 +1,4 @@
-import { TicketModel } from "../models/ticket.model"
+import { ReservationModel } from "../models/reservation.model"
 import { UserModel } from "../models/user.model"
 
 export class UserService {
@@ -11,9 +11,9 @@ export class UserService {
                     username: 'Example',
                     phone: '+3816123456789',
                     address: 'Mokroluska 14, Vozdovac',
-                    favoriteGenre: 'Fantazija',
+                    favoriteType: 'Slagalica',
                     password: 'user123',
-                    tickets: []
+                    reservations: []
                 }
             ]
 
@@ -60,11 +60,11 @@ export class UserService {
         return null
     }
 
-    static createTicket(ticket: TicketModel) {
+    static createReservation(reservation: ReservationModel) {
         const arr = this.retrieveUsers()
         for (let user of arr) {
             if (user.email == localStorage.getItem('active')) {
-                user.tickets.push(ticket)
+                user.reservations.push(reservation)
                 localStorage.setItem('users', JSON.stringify(arr))
                 return true
             }
@@ -73,15 +73,15 @@ export class UserService {
         return false
     }
 
-    static changeTicketStatus(id: number, title : string) {
+    static changeReservationStatus(id: number, state: 'rezervisano' | 'pristiglo' | 'otkazano') {
         const active = this.getActiveUser()
         if (active) {
             const arr = this.retrieveUsers()
             for (let user of arr) {
                 if (user.email == active.email) {
-                    for (let ticket of user.tickets) {
-                        if (ticket.id == id) {
-                            ticket.status = 'watched'
+                    for (let reservation of user.reservations) {
+                        if (reservation.id == id) {
+                            reservation.status = state
                         }
                     }
                     localStorage.setItem('users', JSON.stringify(arr))
@@ -100,12 +100,12 @@ static changeRating(rating: number, id: number) {
     const users = this.retrieveUsers();
     for (let user of users) {
         if (user.email === active.email) {
-            for (let ticket of user.tickets) {
-                if (ticket.id === id) {
-                    if (ticket.rating === rating) {
-                        ticket.rating = null; 
+            for (let reservation of user.reservations) {
+                if (reservation.id === id) {
+                    if (reservation.rating === rating) {
+                        reservation.rating = null; 
                     } else {
-                        ticket.rating = rating; 
+                        reservation.rating = rating; 
                     }
                 }
             }
@@ -139,7 +139,7 @@ static changeRating(rating: number, id: number) {
                 u.email = model.email
                 u.address = model.address
                 u.phone = model.phone
-                u.favoriteGenre = model.favoriteGenre
+                u.favoriteType = model.favoriteType
             }
         }
 
