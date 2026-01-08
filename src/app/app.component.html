@@ -25,6 +25,57 @@
 
   <div class="content">
     <router-outlet></router-outlet> 
+    <div class="chatbot-container">
+      @if (!isChatVisible) {
+        <button mat-fab color="primary" (click)="toggleChat()">
+          <mat-icon>chat</mat-icon>
+        </button>
+      } @else {
+
+        <mat-card class="chatbox">
+          <mat-card-header>
+            <mat-card-title>Support Bot</mat-card-title>
+            <button mat-icon-button (click)="toggleChat()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-card-header>
+
+          <mat-card-content class="chat-body">
+            @for (msg of messages; track $index) {
+              <div
+                class="message"
+                [class.user]="msg.type === 'user'"
+                [class.bot]="msg.type === 'bot'">
+
+                <span
+                  *ngIf="msg.type === 'user'">
+                  {{ msg.text }}
+                </span>
+
+                <span
+                  *ngIf="msg.type === 'bot'"
+                  [innerHTML]="msg.text">
+                </span>
+              </div>
+            }
+          </mat-card-content>
+
+          <mat-card-actions class="chat-footer">
+            <mat-form-field appearance="outline" class="message-input">
+              <input
+                matInput
+                placeholder="Type a message..."
+                [(ngModel)]="userMessage"
+                (keyup.enter)="sendUserMessage()" />
+            </mat-form-field>
+
+            <button mat-icon-button color="primary" (click)="sendUserMessage()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        }
+    </div>  
   </div>
 
   <mat-toolbar color="primary" class="footer">
