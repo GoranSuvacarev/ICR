@@ -30,7 +30,6 @@ import { ReservationModel } from '../../models/reservation.model';
     NgClass,
     NgFor,
     MatSnackBarModule,
-    
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
@@ -51,67 +50,108 @@ export class CartComponent {
     this.loadCart()
   }
 
-  public doPay(reservation: ReservationModel) {
-    const arr = UserService.retrieveUsers()
-    for (let toy of this.activeUser!.reservations.filter(reservation => reservation.status === "pristiglo")) {
-      if(reservation.name == toy.name){
-        if(reservation.id != toy.id){
+  // Get count of reserved items
+  public getReservedCount(): number {
+    return this.cart?.filter(item => item.status === 'rezervisano').length || 0;
+  }
+
+  // Get total price of reserved items only
+  public getReservedPrice(): number {
+    return this.cart
+      ?.filter(item => item.status === 'rezervisano')
+      .reduce((sum, item) => sum + item.price, 0) || 0;
+  }
+
+  // Get total of cancelled items (for display purposes)
+  public getCancelledTotal(): number {
+    return this.cart
+      ?.filter(item => item.status === 'otkazano')
+      .reduce((sum, item) => sum + item.price, 0) || 0;
+  }
+
+  // Checkout all reserved items at once
+  public checkoutAll() {
+    const reservedItems = this.cart?.filter(item => item.status === 'rezervisano') || [];
+
+    if (reservedItems.length === 0) {
+      this.utils.showSnackBar('Nema stavki za plaćanje', 'error', this.snackBar);
+      return;
+    }
+
+    // Check for duplicates with already purchased items
+    const arr = UserService.retrieveUsers();
+    const arrivedItems = this.activeUser!.reservations.filter(r => r.status === "pristiglo");
+
+    for (let reservedItem of reservedItems) {
+      for (let arrivedItem of arrivedItems) {
+        if (reservedItem.name === arrivedItem.name && reservedItem.id !== arrivedItem.id) {
+          // Remove duplicate and skip checkout
           for (let user of arr) {
-          if (user.email == this.activeUser!.email) {
-            user.reservations = this.activeUser?.reservations.filter(currentReservation => currentReservation.id !== reservation.id) || []
-            localStorage.setItem('users', JSON.stringify(arr))
-            this.loadCart()
+            if (user.email === this.activeUser!.email) {
+              user.reservations = this.activeUser?.reservations.filter(r => r.id !== reservedItem.id) || [];
+              localStorage.setItem('users', JSON.stringify(arr));
+              this.loadCart();
+            }
           }
-          }
-          return
+          this.utils.showSnackBar('Duplikat stavke uklonjen iz korpe', 'error', this.snackBar);
+          return;
         }
       }
     }
 
-    if (UserService.changeReservationStatus(reservation.id, 'pristiglo')) {
-      this.loadCart()
-      this.utils.showSnackBar('Igracka je uspešno kupljena', 'success', this.snackBar);
+    // Process all reserved items
+    let successCount = 0;
+    for (let item of reservedItems) {
+      if (UserService.changeReservationStatus(item.id, 'pristiglo')) {
+        successCount++;
+      }
     }
-  }
 
-  public doRating(reservation: ReservationModel, rating: number) {
-    if (UserService.changeRating(rating, reservation.id)) {
+    if (successCount > 0) {
       this.loadCart();
-      this.utils.showSnackBar('Ocena je uspešno dodata', 'success', this.snackBar);
+      this.utils.showSnackBar(`Uspešno kupljeno ${successCount} stavki!`, 'success', this.snackBar);
     } else {
-      this.utils.showSnackBar('Greška pri dodavanju ocene', 'error', this.snackBar);
+      this.utils.showSnackBar('Greška pri kupovini', 'error', this.snackBar);
     }
   }
 
   public doCancel(reservation: ReservationModel) {
     if (UserService.changeReservationStatus(reservation.id, 'otkazano')) {
       this.loadCart()
-      this.utils.showSnackBar('Rezervacija je uspešno otkazana', 'success', this.snackBar);
+      this.utils.showSnackBar('Rezervacija je otkazana', 'success', this.snackBar);
     }
   }
 
-  public doRemove(reservation: ReservationModel) {
+  public doRemove(reservation: ReservationModel){
     const arr = UserService.retrieveUsers()
-    for (let toy of this.activeUser!.reservations) {
-      if(reservation.id == toy.id){
-          for (let user of arr) {
-          if (user.email == this.activeUser!.email) {
-            user.reservations = this.activeUser?.reservations.filter(currentReservation => currentReservation.id !== reservation.id) || []
-            localStorage.setItem('users', JSON.stringify(arr))
-            this.loadCart()
-          }
-          }
-          return
+
+    for (let user of arr) {
+      if (user.email == this.activeUser!.email) {
+        user.reservations = this.activeUser?.reservations.filter(currentReservation => currentReservation.id !== reservation.id) || []
+        localStorage.setItem('users', JSON.stringify(arr))
+        this.loadCart()
+        this.utils.showSnackBar('Stavka je uspešno obrisana', 'success', this.snackBar);
       }
     }
   }
 
-  public loadCart(){
-    this.activeUser = UserService.getActiveUser()
-    this.cart = this.activeUser?.reservations || [];
-    this.totalPrice = 0
-    for(let ticket of this.cart!){
-      this.totalPrice += ticket.price
+  public doRating(reservation: ReservationModel, rating: number) {
+    if (UserService.changeRating(rating, reservation.id)) {
+      this.loadCart()
+      this.utils.showSnackBar('Ocena je uspešno dodata', 'success', this.snackBar);
     }
+  }
+
+  private loadCart() {
+    this.activeUser = UserService.getActiveUser()
+    this.cart = this.activeUser?.reservations || []
+    this.calculateTotal()
+  }
+
+  private calculateTotal() {
+    // Only count items that are NOT cancelled
+    this.totalPrice = this.cart
+      ?.filter(item => item.status !== 'otkazano')
+      .reduce((sum, item) => sum + item.price, 0) || 0;
   }
 }

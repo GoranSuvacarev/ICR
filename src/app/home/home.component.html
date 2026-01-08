@@ -1,10 +1,10 @@
 <div *ngIf="error" class="container">
-    <mat-card class="loading" appearance="outlined" color="red">
-        <mat-card-content>
-            <h1>Oops, an error occurred!</h1>
-            <p style="color: red;">{{error}}</p>
-        </mat-card-content>
-    </mat-card>
+  <mat-card class="loading" appearance="outlined" color="red">
+    <mat-card-content>
+      <h1>Oops, an error occurred!</h1>
+      <p style="color: red;">{{error}}</p>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <app-loading *ngIf="!toys && !error" />
@@ -13,20 +13,20 @@
   <div class="search_form">
     <mat-form-field class="search_input">
       <mat-label><i class="fa-solid fa-magnifying-glass"></i> Pretraga</mat-label>
-      <input matInput type="text" placeholder="Unesite naziv filma..." (keyup)="doFilter()" [(ngModel)]="userInput" >
+      <input matInput type="text" placeholder="Unesite naziv..." (keyup)="doFilter()" [(ngModel)]="userInput" >
     </mat-form-field>
   </div>
 
   <div class="search_form">
     <mat-form-field class="search_input">
-      <mat-label><i class="fa-solid fa-magnifying-glass"></i> Opis</mat-label>
-      <input matInput type="text" placeholder="Unesite naziv filma..." (keyup)="doFilter()" [(ngModel)]="descInput" >
+      <mat-label><i class="fa-solid fa-align-left"></i> Opis</mat-label>
+      <input matInput type="text" placeholder="Pretražite opis..." (keyup)="doFilter()" [(ngModel)]="descInput" >
     </mat-form-field>
   </div>
 
   <div class="genre_form">
     <mat-form-field class="genre-width">
-      <mat-label>Tipovi</mat-label>
+      <mat-label><i class="fa-solid fa-tag"></i> Tipovi</mat-label>
       <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedType">
         <mat-option *ngFor="let type of typeNames" [value]="type">
           {{type}}
@@ -37,7 +37,7 @@
 
   <div class="genre_form">
     <mat-form-field class="glumci-width">
-      <mat-label>Godina</mat-label>
+      <mat-label><i class="fa-solid fa-child"></i> Uzrast</mat-label>
       <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedAgeGroup">
         <mat-option *ngFor="let selectedAgeGroup of ageGroupNames" [value]="selectedAgeGroup">
           {{selectedAgeGroup}}
@@ -48,7 +48,7 @@
 
   <div class="genre_form">
     <mat-form-field class="glumci-width">
-      <mat-label>Target group</mat-label>
+      <mat-label><i class="fa-solid fa-users"></i> Ciljna grupa</mat-label>
       <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedTargetGroup">
         <mat-option *ngFor="let selectedTargetGroup of targetGroupNames" [value]="selectedTargetGroup">
           {{selectedTargetGroup}}
@@ -59,52 +59,64 @@
 
   <div class="search_form">
     <mat-form-field class="search_input">
-      <mat-label>Period</mat-label>
-
+      <mat-label><i class="fa-solid fa-calendar"></i> Period</mat-label>
       <mat-date-range-input [rangePicker]="rangePicker">
         <input matStartDate placeholder="Od" [(ngModel)]="dateFrom" (dateChange)="doFilter()">
         <input matEndDate placeholder="Do" [(ngModel)]="dateTo" (dateChange)="doFilter()">
       </mat-date-range-input>
-
       <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
       <mat-date-range-picker #rangePicker></mat-date-range-picker>
     </mat-form-field>
   </div>
 
-
   <div class="search_form">
     <mat-form-field class="search_input">
-      <mat-label><i class="fa-solid fa-magnifying-glass"></i> Do koliko dinara</mat-label>
-      <input matInput type="number" (keyup)="doFilter()" [(ngModel)]="priceInput" >
+      <mat-label><i class="fa-solid fa-money-bill"></i> Maksimalna cena</mat-label>
+      <input matInput type="number" placeholder="Unesite cenu..." (keyup)="doFilter()" [(ngModel)]="priceInput" >
     </mat-form-field>
   </div>
 
   <div class="genre_form">
     <mat-form-field class="glumci-width">
-      <mat-label>Ocena</mat-label>
+      <mat-label><i class="fa-solid fa-star"></i> Ocena</mat-label>
       <mat-select (selectionChange)="doFilter()" [(ngModel)]="selectedRating">
         <mat-option *ngFor="let selectedRating of ratings" [value]="selectedRating">
-          {{selectedRating}}
+          <i class="fa-solid fa-star" style="color: gold; margin-right: 4px;"></i> {{selectedRating}}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div class="reset">
-    <button (click)="resetFilter()" mat-raised-button>Resetuj filtere</button>
+    <button (click)="resetFilter()" mat-raised-button>
+      <i class="fa-solid fa-rotate-right"></i> Resetuj filtere
+    </button>
   </div>
 </div>
 
-<div *ngIf="toys" class="movies">
-  <mat-card class="movie" appearance="outlined" *ngFor="let toy of filteredToys" (click)="goToDetails(toy.permalink)">
+<div *ngIf="toys" class="toys">
+  <mat-card class="toy" appearance="outlined" *ngFor="let toy of filteredToys" (click)="goToDetails(toy.permalink)">
     <img mat-card-image [src]="toy.imageUrl" [alt]="toy.name">
     <mat-card-content>
       <h1 class="naslov">{{toy.name}}</h1>
-      <p> {{ toy.description }} </p>
-      <p> {{ toy.price }} </p>
-      <p> {{ toy.type.name }} </p>
-      <p> {{ toy.ageGroup.name }} </p>
-      <p> {{ toy.productionDate }}</p>
+      <p>{{toy.description}}</p>
+
+      <div class="toy-metadata">
+        <div class="toy-metadata-item">
+          <i class="fa-solid fa-tag"></i>
+          <span>{{toy.type.name}}</span>
+        </div>
+        <div class="toy-metadata-item">
+          <i class="fa-solid fa-child"></i>
+          <span>{{toy.ageGroup.name}}</span>
+        </div>
+        <div class="toy-metadata-item">
+          <i class="fa-solid fa-calendar"></i>
+          <span>{{toy.productionDate}}</span>
+        </div>
+      </div>
+
+      <div class="toy-price">{{toy.price}} RSD</div>
     </mat-card-content>
   </mat-card>
 </div>
