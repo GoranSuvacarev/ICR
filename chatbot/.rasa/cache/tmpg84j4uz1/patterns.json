@@ -1,0 +1,14 @@
+[
+  {
+    "name": "date_from_criteria",
+    "pattern": "(?<=produced between )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "date_to_criteria",
+    "pattern": "(?<=and )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "desc_criteria",
+    "pattern": "(?<=with description )(.+?\\.)(?= for | under | age | price |$)"
+  }
+]

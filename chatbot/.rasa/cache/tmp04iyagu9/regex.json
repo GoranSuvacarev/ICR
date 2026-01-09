@@ -1,0 +1,26 @@
+[
+  {
+    "name": "date_from_criteria",
+    "pattern": "(?<=produced between )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "date_to_criteria",
+    "pattern": "(?<=and )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "desc_criteria",
+    "pattern": "(?<=with description )(.+?\\.)(?= for | under | age | price |$)"
+  },
+  {
+    "name": "price_criteria",
+    "pattern": "\\b[0-9]{3,6}\\b"
+  },
+  {
+    "name": "rating_criteria",
+    "pattern": "\\b[1-5]\\b"
+  },
+  {
+    "name": "type_criteria",
+    "pattern": "(\\bslagalica\\b|\\bfigura\\b|\\bslikovnica\\b|\\bkreativni\\ svet\\b|\\bvozilo\\b|\\bplišana\\ igračka\\b|\\bdruštvena\\ igra\\b|\\bkonstruktorski\\ svet\\b|\\bmuzička\\ igračka\\b|\\bedukativna\\ igračka\\b)"
+  }
+]
