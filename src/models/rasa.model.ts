@@ -3,5 +3,6 @@ export interface RasaModel {
     attachment: {
         type: 'toy_list' | 'single_toy' | 'type_list' | 'create_order'
         data: any
+        filters: any
     }
 }

@@ -69,33 +69,122 @@ export class AppComponent {
           if (message.attachment != null) {
             if (message.attachment.type == "toy_list" && Array.isArray(message.attachment.data)) {
 
-            let html = ''
-            for (let toy of message.attachment.data as ToyModel[]) {
-              html += `<ul class='list-unstyled'>`
-              html += `<li>Title: ${toy.name}</li>`
-              html += `<li>Type: ${toy.type.name}</li>`
-              html += `<li>Age group: ${toy.ageGroup.name}</li>`
-              html += `<li>Target group: ${toy.targetGroup}</li>`
-              html += `<li>Price: ${toy.price}</li>`
-              const rating = this.utils.calculateRating(toy)
-              html += `<li>Rating: ${ rating > 0 ? rating : 'No Reviews' }</li>`
-              html += `<li>Production date: ${toy.productionDate}</li>`
-              html += `</ul>`
-              html += `<p>${toy.description}</p>`
-              html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
+              const toys: ToyModel[] = message.attachment.data
+
+              for (let toy of toys) {
+                toy.rating = this.utils.calculateRating(toy)
+              }
+
+              const name = message.attachment.filters.search
+              const desc = message.attachment.filters.desc
+              const type = message.attachment.filters.type
+              const age_group = message.attachment.filters.age_group
+              var target_group = message.attachment.filters.target_group
+              if (target_group != null) {
+                if (target_group == "all") target_group = "svi";
+                if (target_group == "boys") target_group = "dečak";
+                if (target_group == "girls") target_group = "devojčica";
+              }
+              const dateFrom = new Date(message.attachment.filters.dateFrom)
+              const dateTo = new Date(message.attachment.filters.dateTo)
+              const price = message.attachment.filters.price
+              const rating = message.attachment.filters.rating
+
+              console.log(name)
+              // console.log(desc)
+              console.log(type)
+              // console.log(age_group)
+              //console.log(target_group)
+              console.log(dateFrom)
+              console.log(dateTo)
+              //console.log(price)
+              //console.log("rating: " + rating)
+              //console.log("------")
+
+              const filteredToys: ToyModel[] = toys
+                .filter(obj => {
+                  if (name == undefined) return true
+                  return obj.name.toLowerCase().includes(name.toLowerCase())
+                })
+                .filter(obj => {
+                  if (desc == undefined) return true
+                  return obj.description.toLowerCase().includes(desc.toLowerCase())
+                })
+                .filter(obj => {
+                  if (type == undefined) return true
+                  if (obj.type.name.toLowerCase() == type.toLowerCase()) {
+                    return true
+                  }
+                  return false
+                })
+                .filter(obj => {
+                  if (age_group == undefined) return true
+                  if (obj.ageGroup.name == age_group) {
+                    return true
+                  }
+                  return false
+                })
+                .filter(obj => {
+                  if (target_group == null) return true
+                  if (obj.targetGroup == target_group) {
+                    return true
+                  }
+                  return false
+                })
+                .filter(obj => {
+                  const date = new Date(obj.productionDate)
+                  if (dateFrom && date < dateFrom) return false;
+                  if (dateTo && date > dateTo) return false;
+
+                  return true;
+                })
+                .filter(obj => {
+                  if (price === undefined) {
+                    return true
+                  }
+                  if (obj.price <= price) {
+                    return true
+                  }
+                  return false
+                })
+                .filter(obj => {
+                  if (rating === undefined) return true
+                  if (obj.rating == rating) {
+
+                    return true
+                  }
+                  return false
+                })
+
+              let html = ''
+
+              for (let toy of filteredToys) {
+                html += `<ul class='list-unstyled'>`
+                html += `<li>Title: ${toy.name}</li>`
+                html += `<li>Type: ${toy.type.name}</li>`
+                html += `<li>Age group: ${toy.ageGroup.name}</li>`
+                html += `<li>Target group: ${toy.targetGroup}</li>`
+                html += `<li>Price: ${toy.price}</li>`
+                const rating = this.utils.calculateRating(toy)
+                html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
+                html += `<li>Production date: ${toy.productionDate}</li>`
+                html += `</ul>`
+                html += `<p>${toy.description}</p>`
+                html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
+              }
+              this.messages.push({
+                type: 'bot',
+                text: html
+              })
+
+              continue
             }
-            this.messages.push({
-              type: 'bot',
-              text: html
-            })
-            continue
           }
-             
-            this.messages.push({
-              type: 'bot',
-              text: message.text
-            })
-          }
+
+          this.messages.push({
+            type: 'bot',
+            text: message.text
+          })
         }
 
         this.messages = this.messages.filter(m => {
@@ -104,33 +193,8 @@ export class AppComponent {
           }
           return true
         })
-        
       })
   }
-
-  // async createBotResponseAsToyList(genre: number = 0) {
-  //   const toys: { data: ToyModel[] } = await ToyService.getToys();
-
-  //   let html = `<ul class='list-unstyled'>`
-  //   toys.data.map(toy => `<li><a href="/movie/${toy.permalink}">${toy.name}</a></li>`)
-  //     .forEach(toy => html += toy)
-  //   html += `</ul>`
-
-  //   this.messages.push({
-  //     type: 'bot',
-  //     text: html
-  //   })
-  //   this.removeBotPlaceholder()
-  // }
-
-  // removeBotPlaceholder() {
-  //   this.messages = this.messages.filter(m => {
-  //     if (m.type === 'bot') {
-  //       return m.text != this.botThinkingPlaceholder
-  //     }
-  //     return true
-  //   })
-  // }
 
   public doLogout() {
     localStorage.removeItem('active')

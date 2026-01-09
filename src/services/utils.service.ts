@@ -55,6 +55,7 @@ export class UtilsService {
 
     return Math.round(rating/reviewCount)
   }
+  
 }
 
 

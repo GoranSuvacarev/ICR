@@ -61,7 +61,7 @@ nlu:
 
     - toys for [boys](target_group_criteria)
     - toys for [girls](target_group_criteria)
-    - toys for [kids](target_group_criteria)
+    - toys for [all](target_group_criteria)
 
     - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria)
     - find toys produced between [01/05/2023](date_from_criteria) and [15/11/2023](date_to_criteria)
@@ -69,6 +69,9 @@ nlu:
     - toys with price up to [5000](price_criteria)
     - find toys cheaper than [3000](price_criteria)
     - show toys under [2000](price_criteria)
+
+    - toys with rating [5](rating_criteria)
+    - toys rated [2](rating_criteria)
 
     - toys with type [slagalica](type_criteria) for [boys](target_group_criteria)
     - toys for age [6-8](age_group_criteria) under [4000](price_criteria)
@@ -79,6 +82,19 @@ nlu:
 
     - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria) for [boys](target_group_criteria)
     - toys for age [3-5](age_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria)
+
+- lookup: type_criteria
+  examples: |
+    - slagalica
+    - figura
+    - slikovnica
+    - kreativni set
+    - vozilo
+    - plišana igračka
+    - društvena igra
+    - konstruktorski set
+    - muzička igračka
+    - edukativna igračka
 
 - regex: desc_criteria
   examples: |
@@ -92,33 +108,18 @@ nlu:
   examples: |
     - (?<=and )\d{1,2}/\d{1,2}/\d{4}
 
+- regex: rating_criteria
+  examples: |
+    - \b[1-5]\b
+
+- regex: price_criteria
+  examples: |
+    - \b[0-9]{3,6}\b
+
+
 - intent: reset_filter
   examples: |
     - Reset filter
-
-# - regex: search_criteria
-#   examples: |
-#     - (?<=toy with name )[^,]+
-
-# - regex: type_criteria
-#   examples: |
-#     - (?<=with type )[^,]+
-
-# - regex: age_group_criteria
-#   examples: |
-#     - (?<=for age )[^,]+
-
-# - regex: target_group_criteria
-#   examples: |
-#     - (?<=toys for )(boys|girls|kids)
-
-# - regex: price_criteria
-#   examples: |
-#     - (?<=toys with price up to )\d+
-
-# - regex: rating_criteria
-#   examples: |
-#     - (?<=toys with rating )[^,]+
 
 - intent: goodbye
   examples: |
