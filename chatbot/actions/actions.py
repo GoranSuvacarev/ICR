@@ -18,10 +18,10 @@ class ActionHelloWorld(Action):
         dispatcher.utter_message(text="Hello World from Actions!")
         return []
     
-class ActionLatestToys(Action):
+class ActionAllToys(Action):
 
     def name(self) -> Text:
-        return "action_latest_toys"
+        return "action_all_toys"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -33,7 +33,7 @@ class ActionLatestToys(Action):
 
         if len(toys) > 0:
             bot_response = {
-                "type": "toy_list",
+                "type": "all_toys",
                 "data": toys
             }
             dispatcher.utter_message(text='Here are the results', attachment=bot_response)
@@ -41,10 +41,10 @@ class ActionLatestToys(Action):
             dispatcher.utter_message(text='No toys found') 
         return []
 
-class ActionSearchToys(Action):
+class ActionSearchToy(Action):
 
     def name(self) -> Text:
-        return "action_search_toys"
+        return "action_search_toy"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -55,6 +55,32 @@ class ActionSearchToys(Action):
         toys = rsp.json()
 
         search = tracker.get_slot("search_criteria")
+
+        if len(toys) > 0:
+            bot_response = {
+                "type": "search_toy",
+                "data": toys,
+                "search": search
+            }
+            dispatcher.utter_message(text='Here are the results', attachment=bot_response)
+        else:
+            dispatcher.utter_message(text='No toy found') 
+        return []
+
+class ActionFilterToys(Action):
+
+    def name(self) -> Text:
+        return "action_filter_toys"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        url = 'https://toy.pequla.com/api/toy'
+        rsp = requests.get(url)
+        toys = rsp.json()
+
+    
         desc = tracker.get_slot("desc_criteria")
         toy_type = tracker.get_slot("type_criteria")
         age_group = tracker.get_slot("age_group_criteria")
@@ -66,8 +92,6 @@ class ActionSearchToys(Action):
 
         filters = {}
 
-        if search:
-            filters["search"] = search
         if desc:
             filters["desc"] = desc
         if toy_type:
@@ -87,7 +111,7 @@ class ActionSearchToys(Action):
         
         if len(toys) > 0:
             bot_response = {
-                "type": "toy_list",
+                "type": "filter_toys",
                 "data": toys,
                 "filters": filters
             }

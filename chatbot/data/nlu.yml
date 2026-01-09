@@ -21,40 +21,54 @@ nlu:
   examples: |
     - hello world
 
-- intent: latest_toys
+- intent: all_toys
   examples: |
-    - recommend me some toys
-    - give me some toys
-    - can you recommend me
-    - any chance you got some toys for me
-    - suggest some toys
-    - what toys do you recommend
-    - show me some toy recommendations
-    - I’m looking for new toys
-    - can you suggest toys for me
-    - do you have any toy suggestions
-    - what are the latest toys
-    - popular toys right now
-    - best toys available
-    - can you help me choose toys
-    - I want to see some toys
-    - recommend toys please
-    - toys
+    - list me all toys
+    - show me all toys
+    - I want to see all toys
+    - display all toys
+    - give me a list of all toys
+    - what toys do you have
+    - show all available toys
+    - I want all the toys
+    - can I see all the toys
+    - list every toy
+    - show me the full toy collection
+    - give me all the toys you have
+    - display every toy
+    - I want to browse all toys
 
-- intent: search_toys
+- intent: search_toy
   examples: |
-    - toys with name [Superheroj figura](search_criteria)
-    - find toys named [Lego Star Wars](search_criteria)
-    - show toys called [Hot Wheels Car](search_criteria)
-    
-    - toys with description [very good toy](desc_criteria)
-    - find toys described as [educational wooden toy](desc_criteria)
-    - show toys with description [durable outdoor toy](desc_criteria)
+    - toy with name [Drvena slagalica životinje](search_criteria)
+    - find toy called [Mala slikovnica boje](search_criteria)
+    - show me the toy [Superheroj figura](search_criteria)
+    - I want the toy [Set za crtanje](search_criteria)
+    - get details for [Vatrogasni kamion](search_criteria)
+    - do you have [Plišana panda](search_criteria)
+    - look for toy [Monopol Junior](search_criteria)
+    - search for [LEGO Classic set](search_criteria)
+    - find [Muzički bubanj](search_criteria) toy
+    - I’m looking for [Pametni globus](search_criteria)
+    - show [Drvena abeceda](search_criteria)
+    - toy named [Figura dinosaurusa](search_criteria)
+    - look up [Kreativni set za modelovanje](search_criteria)
+    - do you sell [Traktor sa prikolicom](search_criteria)
+
+- intent: filter_toys
+  examples: |
+    - toys with description [Edukativna drvena slagalica sa motivima životinja](desc_criteria)
+    - find toys described as [Slikovnica za učenje boja kroz slike i reči](desc_criteria)
+    - show toys with description [Akciona figura popularnog superheroja od 15cm](desc_criteria)
+    - search for toys described as [Puzzle sa motivima životinja](desc_criteria)
+    - show me toys with description [Set za crtanje i bojenje](desc_criteria)
+    - find toys with description [Mekani plišani meda](desc_criteria)
+    - look for toys described as [Edukativni muzički instrument](desc_criteria)
 
     - toys with type [slagalica](type_criteria)
-    - find toys of type [puzzle](type_criteria)
-    - show toys that are [board game](type_criteria)
-
+    - find toys of type [figura](type_criteria)
+    - show toys that are [slikovnica](type_criteria)
+    
     - toys for age [0-2](age_group_criteria)
     - toys suitable for age [3-5](age_group_criteria)
     - find toys for age group [6-8](age_group_criteria)
@@ -69,17 +83,28 @@ nlu:
     - toys with price up to [5000](price_criteria)
     - find toys cheaper than [3000](price_criteria)
     - show toys under [2000](price_criteria)
+    - search for toys costing less than [4000](price_criteria)
 
     - toys with rating [5](rating_criteria)
     - toys rated [2](rating_criteria)
+    - find toys rated [4](rating_criteria)
+    - show toys rated [5](rating_criteria)
+    - search for toys with rating [1](rating_criteria)
 
     - toys with type [slagalica](type_criteria) for [boys](target_group_criteria)
     - toys for age [6-8](age_group_criteria) under [4000](price_criteria)
-    - toys with description [educational puzzle](desc_criteria) for [kids](target_group_criteria)
+    - toys with description [educational puzzle](desc_criteria) for [all](target_group_criteria)
     - toys with type [board game](type_criteria) for age [8-10](age_group_criteria)
     - toys for [girls](target_group_criteria) under [3500](price_criteria)
-    - toys with type [slagalica](type_criteria) for [kids](target_group_criteria) under [5000](price_criteria)
-
+    - toys with type [slagalica](type_criteria) for [all](target_group_criteria) under [5000](price_criteria)
+    - toys with type [slagalica](type_criteria) for [girls](target_group_criteria) under [3000](price_criteria)
+    - find toys for age [4-6](age_group_criteria) with rating [5](rating_criteria)
+    - show toys described as [Edukativna slikovnica](desc_criteria) for [boys](target_group_criteria) under [2000](price_criteria)
+    - toys with type [lego set](type_criteria) for age [7-9](age_group_criteria) with rating [4](rating_criteria)
+    - look for toys for [toddlers](target_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria) under [1500](price_criteria)
+    - find toys with description [Mekani plišani meda](desc_criteria) for age [0-2](age_group_criteria) with rating [5](rating_criteria)
+    - toys for [boys](target_group_criteria) of type [figura](type_criteria) produced between [01/01/2024](date_from_criteria) and [31/12/2024](date_to_criteria)
+    - show toys under [2500](price_criteria) for age [3-5](age_group_criteria) with rating [4](rating_criteria)
     - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria) for [boys](target_group_criteria)
     - toys for age [3-5](age_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria)
 
@@ -95,6 +120,24 @@ nlu:
     - konstruktorski set
     - muzička igračka
     - edukativna igračka
+
+- regex: search_criteria
+  examples: |
+    - (?<=toy with name ).*
+    - (?<=find toy called ).*
+    - (?<=show me the toy ).*
+    - (?<=I want the toy ).*
+    - (?<=get details for ).*
+    - (?<=do you have ).*
+    - (?<=look for toy ).*
+    - (?<=search for ).*
+    - (?<=find ).*(?= toy)
+    - (?<=I’m looking for ).*
+    - (?<=show ).*
+    - (?<=get ).*(?= information)
+    - (?<=toy named ).*
+    - (?<=look up ).*
+    - (?<=do you sell ).*
 
 - regex: desc_criteria
   examples: |

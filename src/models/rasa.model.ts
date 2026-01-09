@@ -1,8 +1,9 @@
 export interface RasaModel {
     text: string
     attachment: {
-        type: 'toy_list' | 'single_toy' | 'type_list' | 'create_order'
+        type: 'all_toys' | 'search_toy' | 'filter_toys' | 'create_order'
         data: any
+        search: string
         filters: any
     }
 }

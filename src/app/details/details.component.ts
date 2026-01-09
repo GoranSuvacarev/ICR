@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import { NgIf } from '@angular/common';
-import { LoadingComponent } from "../loading/loading.component";
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,12 +12,12 @@ import { ToyModel } from '../../models/toy.model';
 import { ToyService } from '../../services/toy.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms'; // or ReactiveFormsModule
-// ... add these to your @NgModule imports ...
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-details',
-  imports: [NgIf, LoadingComponent, MatCardModule, MatListModule, MatButtonModule, RouterLink, MatSnackBarModule,MatFormFieldModule,
+  imports: [NgIf, MatCardModule, MatListModule, MatButtonModule, MatSnackBarModule,MatFormFieldModule,
     MatInputModule,FormsModule
   ],
   templateUrl: './details.component.html',

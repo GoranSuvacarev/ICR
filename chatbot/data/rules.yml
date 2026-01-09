@@ -17,15 +17,20 @@ rules:
   - intent: hello_world
   - action: action_hello_world
 
-- rule: 'Recommend toys'
+- rule: 'All toys'
   steps:
-  - intent: latest_toys
-  - action: action_latest_toys
+  - intent: all_toys
+  - action: action_all_toys
 
-- rule: 'Search toys'
+- rule: 'Search toy'
   steps:
-  - intent: search_toys
-  - action: action_search_toys
+  - intent: search_toy
+  - action: action_search_toy
+
+- rule: 'Filter toys'
+  steps:
+  - intent: filter_toys
+  - action: action_filter_toys
 
 - rule: 'Reset filter'
   steps:
