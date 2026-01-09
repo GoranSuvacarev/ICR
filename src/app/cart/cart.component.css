@@ -29,7 +29,7 @@ h1 {
 }
 
 h1 i {
-  color: #3f51b5;
+  color: #2ECC71;
 }
 
 /* Empty Cart State */
@@ -232,17 +232,17 @@ td {
   letter-spacing: 1px;
   padding: 0 32px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0F2027 0%, #2ECC71 100%);
   color: white;
   border: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .checkout-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
 }
 
 .checkout-button:disabled {

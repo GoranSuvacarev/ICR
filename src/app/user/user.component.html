@@ -1,137 +1,109 @@
 <div class="wrapper" *ngIf="user">
-
-    <mat-card class="user-card" appearance="outlined">
-        <mat-card-header>
-            <img mat-card-avatar [src]="['https://ui-avatars.com/api/?name='+user.email]">
-            <mat-card-title>{{user.username}}</mat-card-title>
-            <mat-card-subtitle>
-                <p class="no-border"><strong>Omiljeni žanr : </strong> {{user.favoriteType}}</p>
-            </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="user-card-content">
-            <mat-accordion multi>
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <i class="fa-solid fa-key"></i>&nbsp;Promeni lozinku
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                  <mat-label>Stara lozinka</mat-label>
-                  <input matInput type="password" [(ngModel)]="oldPasswordValue"/>
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Nova lozinka</mat-label>
-                  <input matInput type="password" [(ngModel)]="newPasswordValue" />
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Ponovi lozinku</mat-label>
-                  <input matInput type="password" [(ngModel)]="repeatPasswordValue" />
-                </mat-form-field>
-                <button mat-raised-button (click)="doChangePassword()">
-                  Primeni
-                </button>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <i class="fa-regular fa-user"></i>&nbsp;Promeni korisničke informacije
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                  <mat-label>Email</mat-label>
-                  <input matInput type="text" [(ngModel)]="copyUser!.email" disabled/>
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Username</mat-label>
-                  <input matInput type="text" [(ngModel)]="copyUser!.username" />
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Telefon</mat-label>
-                  <input matInput type="text" [(ngModel)]="copyUser!.phone" />
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Adresa</mat-label>
-                  <input matInput type="text" [(ngModel)]="copyUser!.address" />
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Omiljeni žanr</mat-label>
-                  <mat-select [(ngModel)]="copyUser!.favoriteType">
-                      <mat-option *ngFor="let type of typeNames" [value]="type">
-                          {{ type }}
-                      </mat-option>
-                  </mat-select>
-              </mat-form-field>
-                <button mat-raised-button (click)="doUpdateUser()">
-                  Primeni
-                </button>
-              </mat-expansion-panel>
-
-            </mat-accordion>
-        </mat-card-content>
-    </mat-card>
-
-    <!-- <mat-card appearance="outlined" *ngIf="reservedToys!.length == 0" class="no-order">
-        <mat-card-content>
-            <h1>Nisi rezervisao ni jednu igracku!</h1>
-        </mat-card-content>
-    </mat-card>
-
-    <div *ngIf="reservedToys!.length > 0">
-        <div>
-            <h1>Rezervisane igracke</h1>
-            <table mat-table [dataSource]="reservedToys!" class="mat-elevation-z8">
-
-                <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef>
-                      <i class="fa-solid fa-pen-nib"></i> Naslov
-                    </th>
-                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="runTime">
-                    <th mat-header-cell *matHeaderCellDef>
-                      <i class="fa-solid fa-clock"></i> Dužina trajanja filma
-                    </th>
-                    <td mat-cell *matCellDef="let element"> {{utils.formatRuntime(element.runTime)}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="scheduledAt">
-                    <th mat-header-cell *matHeaderCellDef>
-                      <i class="fa-solid fa-calendar-days"></i> Početak projekcije
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{element.scheduledAt}}
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="price">
-                    <th mat-header-cell *matHeaderCellDef>
-                        <i class="fa-solid fa-ticket"></i> Cena karte
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{element.price}} RSD
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="rating">
-                    <th mat-header-cell *matHeaderCellDef>
-                      <i class="fa-solid fa-star"></i> Ocena
-                    </th>
-                    <td mat-cell *matCellDef="let ticket" class="actions">
-                        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-                            <i
-                                class="fa-solid fa-star"
-                                [ngClass]="{'checked': ticket.rating >= star}"
-                                (click)="doRating(ticket, star)">
-                            </i>
-                        </ng-container>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+  <!-- Profile Header Card -->
+  <div class="profile-header">
+    <div class="avatar-section">
+      <img class="profile-avatar" [src]="['https://ui-avatars.com/api/?name='+user.email+'&size=150&background=2ECC71&color=fff']" [alt]="user.username">
+      <div class="user-info">
+        <h2 class="username">{{user.username}}</h2>
+        <p class="user-email">{{user.email}}</p>
+        <div class="favorite-badge">
+          <i class="fa-solid fa-heart"></i>
+          <span>{{user.favoriteType}}</span>
         </div>
-    </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="profile-grid">
+
+    <!-- User Information Card -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <div class="card-header-content">
+          <i class="fa-regular fa-user header-icon"></i>
+          <h3>Korisničke Informacije</h3>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" [(ngModel)]="copyUser!.email" disabled/>
+            <mat-icon matPrefix>email</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Korisničko ime</mat-label>
+            <input matInput type="text" [(ngModel)]="copyUser!.username" />
+            <mat-icon matPrefix>person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Telefon</mat-label>
+            <input matInput type="text" [(ngModel)]="copyUser!.phone" />
+            <mat-icon matPrefix>phone</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Adresa</mat-label>
+            <input matInput type="text" [(ngModel)]="copyUser!.address" />
+            <mat-icon matPrefix>home</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Omiljeni tip</mat-label>
+            <mat-select [(ngModel)]="copyUser!.favoriteType">
+              <mat-option *ngFor="let type of typeNames" [value]="type">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>favorite</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button class="action-button" (click)="doUpdateUser()">
+          <i class="fa-solid fa-check"></i>
+          Sačuvaj izmene
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Change Password Card -->
+    <mat-card class="section-card" appearance="outlined">
+      <mat-card-header>
+        <div class="card-header-content">
+          <i class="fa-solid fa-key header-icon"></i>
+          <h3>Promeni Lozinku</h3>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Stara lozinka</mat-label>
+            <input matInput type="password" [(ngModel)]="oldPasswordValue"/>
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nova lozinka</mat-label>
+            <input matInput type="password" [(ngModel)]="newPasswordValue" />
+            <mat-icon matPrefix>lock_open</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Ponovi lozinku</mat-label>
+            <input matInput type="password" [(ngModel)]="repeatPasswordValue" />
+            <mat-icon matPrefix>lock_reset</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button class="action-button" (click)="doChangePassword()">
+          <i class="fa-solid fa-key"></i>
+          Promeni lozinku
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
 </div>

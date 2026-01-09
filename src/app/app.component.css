@@ -70,8 +70,8 @@ html, body {
 }
 
 .chatbox {
-  width: 320px;
-  height: 420px;
+  width: 380px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   padding-left: 16px;

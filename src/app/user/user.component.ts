@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { UserModel } from '../../models/user.model';
-import { MatTableModule } from '@angular/material/table';
-import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
 import { NgFor } from '@angular/common';
-import {UtilsService} from '../../services/utils.service';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import { UtilsService } from '../../services/utils.service';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { TypeModel } from '../../models/type.model';
 import { ReservationModel } from '../../models/reservation.model';
 import { ToyService } from '../../services/toy.service';
@@ -23,52 +21,48 @@ import { ToyService } from '../../services/toy.service';
   selector: 'app-user',
   imports: [
     NgIf,
+    NgFor,
     MatButtonModule,
     MatCardModule,
-    MatTableModule,
-    MatExpansionModule,
-    MatAccordion,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     FormsModule,
-    // NgClass,
-    NgFor,
     MatSelect,
     MatOption,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterLink
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  public displayedColumns: string[] = ['title', 'runTime', 'scheduledAt', 'price','rating'];
   public user: UserModel | null = null
-  public copyUser : UserModel | null = null
+  public copyUser: UserModel | null = null
   public reservedToys: ReservationModel[] | null = null
 
   public oldPasswordValue = ''
   public newPasswordValue = ''
   public repeatPasswordValue = ''
 
-  public types : TypeModel[] = []
-  public typeNames : string[] = []
-  public type = ''
+  public types: TypeModel[] = []
+  public typeNames: string[] = []
 
-  constructor(private router: Router,  public utils: UtilsService, private snackBar: MatSnackBar) {
+  constructor(private router: Router, public utils: UtilsService, private snackBar: MatSnackBar) {
     if (!UserService.getActiveUser()) {
       router.navigate(['/home'])
       return
     }
 
     ToyService.getTypes()
-          .then(rsp => {
-            this.types = rsp.data;
+      .then(rsp => {
+        this.types = rsp.data;
 
-            for (let type of this.types) {
-              let name = type.name;
-              this.typeNames.push(name);
-            }
-          })
+        for (let type of this.types) {
+          let name = type.name;
+          this.typeNames.push(name);
+        }
+      })
 
     this.loadProfile()
   }
@@ -120,7 +114,7 @@ export class UserComponent {
     }
   }
 
-  public loadProfile(){
+  public loadProfile() {
     this.user = UserService.getActiveUser()
     this.copyUser = UserService.getActiveUser()
     this.reservedToys = this.user?.reservations.filter(reservation => reservation.status === "rezervisano") || [];
