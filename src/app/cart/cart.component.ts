@@ -62,13 +62,6 @@ export class CartComponent {
       .reduce((sum, item) => sum + item.price, 0) || 0;
   }
 
-  // Get total of cancelled items (for display purposes)
-  public getCancelledTotal(): number {
-    return this.cart
-      ?.filter(item => item.status === 'otkazano')
-      .reduce((sum, item) => sum + item.price, 0) || 0;
-  }
-
   // Checkout all reserved items at once
   public checkoutAll() {
     const reservedItems = this.cart?.filter(item => item.status === 'rezervisano') || [];
