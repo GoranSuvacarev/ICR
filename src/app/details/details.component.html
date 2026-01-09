@@ -1,36 +1,21 @@
-<div *ngIf="error" class="wrong">
-    <mat-card class="loading" appearance="outlined" color="red">
-        <mat-card-content>
-          <h1 style="color: red;">Došlo je do greške!</h1>
-          <button mat-raised-button routerLink="/toys">Nazad na početnu stranu</button>
-        </mat-card-content>
-    </mat-card>
-</div>
-
-<app-loading *ngIf="!toy && !error"></app-loading>
 
 
 <div class="container" *ngIf="toy">
-  <div *ngIf="toy" class="movie-details">
+  <div class="toy-details">
     <div class="movie-header">
-
       <div class="poster-container">
-        <img [src]="toy.imageUrl" [alt]="toy.name" class="movie-poster">
+        <img [src]="toy.imageUrl" [alt]="toy.name" class="toy-poster">
       </div>
 
-      <div class="movie-info">
+      <div class="toy-info">
 
-        <h1 class="movie-title"> {{toy.name}}</h1>
-
-        <div class="movie-meta">
-          <span class="release-date">{{ utils.formatDate(toy.productionDate) }}</span>
-          <span class="separator">•</span>
-          <span class="runtime">{{ toy.price }}</span>
-          <span class="separator">•</span>
+        <h1 class="toy-title"> {{toy.name}}</h1>
+        
+        <div class="toy-meta">
           <span class="rating" *ngIf="utils.calculateRating(toy) > 0; else noReviews">
             <i class="fa-solid fa-star"></i>
             {{ utils.calculateRating(toy) }}/5
-           </span>
+          </span>
           <ng-template #noReviews>
             <span class="rating no-reviews">
               Nema recenzija
@@ -38,46 +23,60 @@
           </ng-template>
         </div>
 
-        <div class="genres">
-          <strong>Type: </strong>
-          <span class="genre-tag">{{ toy.type.name }}</span>
+        <div class="type_toy">
+          <strong> Type: </strong>
+          <span class="type-toy-tag">{{ toy.type.name }}</span>
         </div>
 
-        <div class="director">
-          <strong>Age Group: </strong> {{ toy.ageGroup.name }}
+        <div class="age_group">
+          <strong> Age Group: </strong> {{ toy.ageGroup.name }}
         </div>
 
-        <div class="cast">
-          <strong>Target Group: </strong> {{ toy.targetGroup }}
+        <div class="target_grp">
+          <strong>  Target Group: </strong> {{ toy.targetGroup }}
         </div>
 
         <div class="plot">
-          <p>{{ getTruncatedDescription() }}</p>
-          <button mat-raised-button
-            *ngIf="shouldShowMoreButton()"
-            class="show-more-button"
-            (click)="toggleDescription()">
-            {{ isDescriptionExpanded ? 'Prikaži manje' : 'Prikaži više' }}
-          </button>
+          <strong>  Description:</strong>
+          {{toy.description}}
         </div>
+
+        <div class="plot">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+          <strong> Price:</strong>
+          {{toy.price}} DIN
+        </div>
+
+      
+<div class="screening-section">
+  <mat-card class="screening-card">
+    <mat-card-content class="screening-content">
+
+      
+      <mat-form-field appearance="outline" class="quantity-field">
+        <mat-label>Quantity</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="selectedQuantity"
+          min="1"
+          max="100"
+          step="1"
+        >
+      </mat-form-field>
+
+      
+      <div class="screening-type" (click)="reserveToy(selectedQuantity)">
+        <i class="fa-solid fa-cart-shopping"></i>  Dodaj u korpu
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
 
       </div>
     </div>
   </div>
 </div>
-
-<div class="container" *ngIf="toy">
-
-  <div class="screening-section">
-
-    <div class="screening-times">
-      <mat-card class="screening-card" (click)="reserveToy()" >
-        <mat-card-content class="screening-content">
-          <div class="screening-type"><i class="fa-solid fa-cart-shopping"></i> Dodaj u korpu</div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-</div>
-
 
