@@ -9,8 +9,9 @@ intents:
   - mood_unhappy
   - bot_challenge
   - hello_world
-  - latest_toys
-  - search_toys
+  - all_toys
+  - search_toy
+  - filter_toys
   - reset_filter
 
 slots:
@@ -102,8 +103,9 @@ responses:
 
 actions:
   - action_hello_world
-  - action_latest_toys
-  - action_search_toys
+  - action_all_toys
+  - action_search_toy
+  - action_filter_toys
   - action_reset_filter
 
 session_config:

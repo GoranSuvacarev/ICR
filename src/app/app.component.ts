@@ -67,7 +67,63 @@ export class AppComponent {
 
         for (let message of rsp.data) {
           if (message.attachment != null) {
-            if (message.attachment.type == "toy_list" && Array.isArray(message.attachment.data)) {
+        
+            if(message.attachment.type == "all_toys" && Array.isArray(message.attachment.data)) {
+              let html = ''
+              for (let toy of message.attachment.data) {
+                html += `<ul class='list-unstyled'>`
+                html += `<li>Title: ${toy.name}</li>`
+                html += `<li>Type: ${toy.type.name}</li>`
+                html += `<li>Age group: ${toy.ageGroup.name}</li>`
+                html += `<li>Target group: ${toy.targetGroup}</li>`
+                html += `<li>Price: ${toy.price}</li>`
+                const rating = this.utils.calculateRating(toy)
+                html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
+                html += `<li>Production date: ${toy.productionDate}</li>`
+                html += `</ul>`
+                html += `<p>${toy.description}</p>`
+                html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
+              }
+              this.messages.push({
+                type: 'bot',
+                text: html
+              })
+
+              continue
+            }
+
+            if(message.attachment.type == "search_toy" && Array.isArray(message.attachment.data)) {
+              const toys: ToyModel[] = message.attachment.data
+
+              const name = message.attachment.search
+
+              const toy: ToyModel = toys.filter(obj => {
+                  return obj.name.toLowerCase().includes(name.toLowerCase())
+                })[0]
+
+              let html = ''
+              html += `<ul class='list-unstyled'>`
+              html += `<li>Title: ${toy.name}</li>`
+              html += `<li>Type: ${toy.type.name}</li>`
+              html += `<li>Age group: ${toy.ageGroup.name}</li>`
+              html += `<li>Target group: ${toy.targetGroup}</li>`
+              html += `<li>Price: ${toy.price}</li>`
+              const rating = this.utils.calculateRating(toy)
+              html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
+              html += `<li>Production date: ${toy.productionDate}</li>`
+              html += `</ul>`
+              html += `<p>${toy.description}</p>`
+              html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
+              
+              this.messages.push({
+                type: 'bot',
+                text: html
+              })
+
+              continue
+            }
+
+            if (message.attachment.type == "filter_toys" && Array.isArray(message.attachment.data)) {
 
               const toys: ToyModel[] = message.attachment.data
 
@@ -75,13 +131,12 @@ export class AppComponent {
                 toy.rating = this.utils.calculateRating(toy)
               }
 
-              const name = message.attachment.filters.search
               const desc = message.attachment.filters.desc
               const type = message.attachment.filters.type
               const age_group = message.attachment.filters.age_group
               var target_group = message.attachment.filters.target_group
               if (target_group != null) {
-                if (target_group == "all") target_group = "svi";
+                if (target_group == "kids") target_group = "svi";
                 if (target_group == "boys") target_group = "dečak";
                 if (target_group == "girls") target_group = "devojčica";
               }
@@ -90,22 +145,20 @@ export class AppComponent {
               const price = message.attachment.filters.price
               const rating = message.attachment.filters.rating
 
-              console.log(name)
-              // console.log(desc)
+              console.log(desc)
               console.log(type)
-              // console.log(age_group)
-              //console.log(target_group)
+              console.log(age_group)
+              console.log(target_group)
               console.log(dateFrom)
               console.log(dateTo)
-              //console.log(price)
-              //console.log("rating: " + rating)
-              //console.log("------")
+              console.log(price)
+              console.log("rating: " + rating)
+              console.log("------")
+              
+              // Toys with type slagalica for kids under 5000
+              console.log(toys)
 
               const filteredToys: ToyModel[] = toys
-                .filter(obj => {
-                  if (name == undefined) return true
-                  return obj.name.toLowerCase().includes(name.toLowerCase())
-                })
                 .filter(obj => {
                   if (desc == undefined) return true
                   return obj.description.toLowerCase().includes(desc.toLowerCase())
@@ -125,8 +178,12 @@ export class AppComponent {
                   return false
                 })
                 .filter(obj => {
+                  console.log("BEFORE")
                   if (target_group == null) return true
+                  console.log(obj.targetGroup)
+                  console.log(target_group)
                   if (obj.targetGroup == target_group) {
+                    console.log("AFTER")
                     return true
                   }
                   return false
