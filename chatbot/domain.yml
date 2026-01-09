@@ -10,6 +10,75 @@ intents:
   - bot_challenge
   - hello_world
   - latest_toys
+  - search_toys
+  - reset_filter
+
+slots:
+  search_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: search_criteria
+  desc_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: desc_criteria
+  type_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: type_criteria
+  age_group_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: age_group_criteria
+  target_group_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: target_group_criteria
+  date_from_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date_from_criteria
+  date_to_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date_to_criteria
+  price_criteria:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: price_criteria
+  rating_criteria:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: rating_criteria
+
+entities:
+  - search_criteria
+  - desc_criteria
+  - type_criteria
+  - age_group_criteria
+  - target_group_criteria
+  - date_from_criteria
+  - date_to_criteria
+  - price_criteria
+  - rating_criteria
 
 responses:
   utter_greet:
@@ -34,6 +103,8 @@ responses:
 actions:
   - action_hello_world
   - action_latest_toys
+  - action_search_toys
+  - action_reset_filter
 
 session_config:
   session_expiration_time: 60

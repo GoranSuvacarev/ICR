@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ToyModel } from '../models/toy.model';
-import { ToyService } from '../services/toy.service';
 import { UtilsService } from '../services/utils.service';
 
 @Component({
@@ -67,9 +66,11 @@ export class AppComponent {
         }
 
         for (let message of rsp.data) {
-          if (message.attachment != null && Array.isArray(message.attachment)) {
+          if (message.attachment != null) {
+            if (message.attachment.type == "toy_list" && Array.isArray(message.attachment.data)) {
+
             let html = ''
-            for (let toy of message.attachment as ToyModel[]) {
+            for (let toy of message.attachment.data as ToyModel[]) {
               html += `<ul class='list-unstyled'>`
               html += `<li>Title: ${toy.name}</li>`
               html += `<li>Type: ${toy.type.name}</li>`
@@ -87,14 +88,14 @@ export class AppComponent {
               type: 'bot',
               text: html
             })
-
             continue
           }
-
-          this.messages.push({
-            type: 'bot',
-            text: message.text
-          })
+             
+            this.messages.push({
+              type: 'bot',
+              text: message.text
+            })
+          }
         }
 
         this.messages = this.messages.filter(m => {

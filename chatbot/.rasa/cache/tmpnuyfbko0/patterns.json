@@ -1,0 +1,6 @@
+[
+  {
+    "name": "desc_criteria",
+    "pattern": "(?<=with description )(.+?\\.)(?= for | under | age | price |$)"
+  }
+]

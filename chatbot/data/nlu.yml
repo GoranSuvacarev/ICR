@@ -41,6 +41,85 @@ nlu:
     - recommend toys please
     - toys
 
+- intent: search_toys
+  examples: |
+    - toys with name [Superheroj figura](search_criteria)
+    - find toys named [Lego Star Wars](search_criteria)
+    - show toys called [Hot Wheels Car](search_criteria)
+    
+    - toys with description [very good toy](desc_criteria)
+    - find toys described as [educational wooden toy](desc_criteria)
+    - show toys with description [durable outdoor toy](desc_criteria)
+
+    - toys with type [slagalica](type_criteria)
+    - find toys of type [puzzle](type_criteria)
+    - show toys that are [board game](type_criteria)
+
+    - toys for age [0-2](age_group_criteria)
+    - toys suitable for age [3-5](age_group_criteria)
+    - find toys for age group [6-8](age_group_criteria)
+
+    - toys for [boys](target_group_criteria)
+    - toys for [girls](target_group_criteria)
+    - toys for [kids](target_group_criteria)
+
+    - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria)
+    - find toys produced between [01/05/2023](date_from_criteria) and [15/11/2023](date_to_criteria)
+
+    - toys with price up to [5000](price_criteria)
+    - find toys cheaper than [3000](price_criteria)
+    - show toys under [2000](price_criteria)
+
+    - toys with type [slagalica](type_criteria) for [boys](target_group_criteria)
+    - toys for age [6-8](age_group_criteria) under [4000](price_criteria)
+    - toys with description [educational puzzle](desc_criteria) for [kids](target_group_criteria)
+    - toys with type [board game](type_criteria) for age [8-10](age_group_criteria)
+    - toys for [girls](target_group_criteria) under [3500](price_criteria)
+    - toys with type [slagalica](type_criteria) for [kids](target_group_criteria) under [5000](price_criteria)
+
+    - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria) for [boys](target_group_criteria)
+    - toys for age [3-5](age_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria)
+
+- regex: desc_criteria
+  examples: |
+    - (?<=with description )(.+?\.)(?= for | under | age | price |$)
+
+- regex: date_from_criteria
+  examples: |
+    - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
+
+- regex: date_to_criteria
+  examples: |
+    - (?<=and )\d{1,2}/\d{1,2}/\d{4}
+
+- intent: reset_filter
+  examples: |
+    - Reset filter
+
+# - regex: search_criteria
+#   examples: |
+#     - (?<=toy with name )[^,]+
+
+# - regex: type_criteria
+#   examples: |
+#     - (?<=with type )[^,]+
+
+# - regex: age_group_criteria
+#   examples: |
+#     - (?<=for age )[^,]+
+
+# - regex: target_group_criteria
+#   examples: |
+#     - (?<=toys for )(boys|girls|kids)
+
+# - regex: price_criteria
+#   examples: |
+#     - (?<=toys with price up to )\d+
+
+# - regex: rating_criteria
+#   examples: |
+#     - (?<=toys with rating )[^,]+
+
 - intent: goodbye
   examples: |
     - cu
