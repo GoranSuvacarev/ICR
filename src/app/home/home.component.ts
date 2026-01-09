@@ -29,7 +29,7 @@ export class HomeComponent {
 
   public toys: ToyModel[] | null = null;
   public filteredToys : ToyModel [] | null = null
-  
+
   public types: TypeModel[] = []
   public typeNames : string[] = []
 
@@ -39,7 +39,7 @@ export class HomeComponent {
   public targetGroupNames: string[] = ["svi", "dečak", "devojčica"]
 
   public ratings: number[] = [1, 2, 3, 4, 5]
-  
+
   public userInput: string = ''
   public descInput: string = ''
   public selectedType = ''
@@ -141,7 +141,6 @@ export class HomeComponent {
         }
         return false
       })
-      
   }
 
   resetFilter(){

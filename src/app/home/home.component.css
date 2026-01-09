@@ -160,7 +160,6 @@ mat-card-content {
 
 .toy p {
   margin: 0;
-  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.5;
   overflow: hidden;
@@ -182,7 +181,7 @@ mat-card-content {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.7);
   padding: 6px 12px;
   background: rgba(255, 255, 255, 0.05);
