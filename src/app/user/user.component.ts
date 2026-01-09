@@ -1,37 +1,36 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router, RouterLink } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { UserModel } from '../../models/user.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
-import { UtilsService } from '../../services/utils.service';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { MatSelect, MatOption } from '@angular/material/select';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { UserModel } from '../../models/user.model';
 import { TypeModel } from '../../models/type.model';
 import { ReservationModel } from '../../models/reservation.model';
 import { ToyService } from '../../services/toy.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-user',
+  standalone: true,
   imports: [
     NgIf,
     NgFor,
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    FormsModule,
     MatSelect,
     MatOption,
-    MatSnackBarModule,
-    RouterLink
+    MatSnackBarModule
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
@@ -118,5 +117,9 @@ export class UserComponent {
     this.user = UserService.getActiveUser()
     this.copyUser = UserService.getActiveUser()
     this.reservedToys = this.user?.reservations.filter(reservation => reservation.status === "rezervisano") || [];
+  }
+
+  public goToHome() {
+    this.router.navigate(['/']);
   }
 }
