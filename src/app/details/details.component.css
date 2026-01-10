@@ -222,7 +222,7 @@
   flex-wrap: wrap;
 }
 
-/* Quantity Field */
+
 .quantity-field {
   flex: 0 0 150px;
   flex-direction: row;
@@ -265,7 +265,7 @@
   color: #2ECC71;
 }
 
-/* Add to Cart Button */
+
 .screening-type {
   flex: 1;
   min-width: 200px;
@@ -299,7 +299,7 @@
   font-size: 1.2rem;
 }
 
-/* Snackbar Styles */
+
 :host ::ng-deep .success-snackbar {
   background-color: #4caf50;
   color: white;
@@ -315,7 +315,7 @@
   color: white;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1200px) {
   .poster-container {
     flex: 0 0 380px;

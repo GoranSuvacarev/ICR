@@ -50,19 +50,19 @@ export class CartComponent {
     this.loadCart()
   }
 
-  // Get count of reserved items
+  
   public getReservedCount(): number {
     return this.cart?.filter(item => item.status === 'rezervisano').length || 0;
   }
 
-  // Get total price of reserved items only
+ 
   public getReservedPrice(): number {
     return this.cart
       ?.filter(item => item.status === 'rezervisano')
       .reduce((sum, item) => sum + item.price, 0) || 0;
   }
 
-  // Checkout all reserved items at once
+  
   public checkoutAll() {
     const reservedItems = this.cart?.filter(item => item.status === 'rezervisano') || [];
 
@@ -74,7 +74,7 @@ export class CartComponent {
     const arr = UserService.retrieveUsers();
     const arrivedItems = this.activeUser!.reservations.filter(r => r.status === "pristiglo");
 
-    // Check for duplicates with already purchased items
+    
     for (let reservedItem of reservedItems) {
       for (let arrivedItem of arrivedItems) {
         if (reservedItem.name === arrivedItem.name && reservedItem.id !== arrivedItem.id) {
@@ -89,7 +89,7 @@ export class CartComponent {
       }
     }
 
-    // Group reserved items by product name to handle duplicates
+    
     const itemsByName = new Map<string, ReservationModel[]>();
     for (let item of reservedItems) {
       if (!itemsByName.has(item.name)) {
@@ -98,14 +98,13 @@ export class CartComponent {
       itemsByName.get(item.name)!.push(item);
     }
 
-    let totalItemsCount = reservedItems.length; // Total items including duplicates
+    let totalItemsCount = reservedItems.length; 
     let successCount = 0;
     let removedCount = 0;
 
-    // First, remove all duplicates (keep only first of each product)
+    
     for (let [productName, items] of itemsByName) {
       if (items.length > 1) {
-        // Remove duplicates (items after the first one)
         for (let i = 1; i < items.length; i++) {
           for (let user of arr) {
             if (user.email === this.activeUser!.email) {
@@ -117,15 +116,13 @@ export class CartComponent {
       }
     }
 
-    // Save all removals at once
+    
     if (removedCount > 0) {
       localStorage.setItem('users', JSON.stringify(arr));
     }
 
-    // Reload user data after removing duplicates
     this.activeUser = UserService.getActiveUser();
 
-    // Now mark all remaining items as "pristiglo"
     for (let [productName, items] of itemsByName) {
       const itemToKeep = items[0];
       if (UserService.changeReservationStatus(itemToKeep.id, 'pristiglo')) {
@@ -176,7 +173,6 @@ export class CartComponent {
   }
 
   private calculateTotal() {
-    // Only count items that are NOT cancelled
     this.totalPrice = this.cart
       ?.filter(item => item.status !== 'otkazano')
       .reduce((sum, item) => sum + item.price, 0) || 0;

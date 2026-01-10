@@ -58,14 +58,14 @@ slots:
     mappings:
       - type: from_entity
         entity: date_to_criteria
-  # Changed to text because regex extracts text, we parse it in actions
+ 
   price_criteria:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: price_criteria
-  # Changed to text because regex extracts text, we parse it in actions
+ 
   rating_criteria:
     type: text
     influence_conversation: false

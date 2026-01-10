@@ -31,13 +31,12 @@ export class LoginComponent {
   }
 
   public doLogin() {
-    // Validate email format
     if (!this.email || !this.emailPattern.test(this.email)) {
       this.utils.showSnackBar('Unesite validnu email adresu', 'error', this.snackBar);
       return;
     }
 
-    // Validate password length
+    
     if (!this.password || this.password.length < 6) {
       this.utils.showSnackBar('Šifra mora imati najmanje 6 karaktera', 'error', this.snackBar);
       return;

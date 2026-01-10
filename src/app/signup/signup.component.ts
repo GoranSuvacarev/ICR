@@ -31,7 +31,7 @@ export class SignupComponent {
   public address = ''
   public type = ''
 
-  // Regex patterns for validation
+  
   private emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   private usernamePattern = /^[a-zA-Z0-9_-]+$/;
   private phonePattern = /^[0-9]{9,10}$/;
@@ -49,7 +49,6 @@ export class SignupComponent {
   }
 
   public doSignup() {
-    // Validate all required fields
     if (!this.type) {
       this.utils.showSnackBar('Morate odabrati omiljeni žanr', 'error', this.snackBar);
       return;

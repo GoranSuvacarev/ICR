@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-/* Keyframe Animations */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -17,7 +17,7 @@
   }
 }
 
-/* Main Container */
+
 .wrapper {
   max-width: 1400px;
   width: 100%;
@@ -26,7 +26,7 @@
   flex: 1;
 }
 
-/* Header */
+
 .cart-header {
   margin-bottom: 32px;
   animation: fadeInUp 0.6s ease-out;
@@ -47,7 +47,7 @@ h1 i {
   color: #2ECC71;
 }
 
-/* Empty Cart State */
+
 .no-order {
   text-align: center;
   padding: 80px 40px;
@@ -72,14 +72,14 @@ h1 i {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Cart Content */
+
 .cart-content {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
-/* Table Container */
+
 .table-container {
   overflow-x: auto;
   border: 2px solid rgba(255, 255, 255, 0.15);
@@ -91,7 +91,7 @@ h1 i {
   animation: fadeInUp 0.8s ease-out 0.2s backwards;
 }
 
-/* Table Styles */
+
 table {
   width: 100%;
 }
@@ -114,7 +114,7 @@ td {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Status Badge */
+
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -144,7 +144,7 @@ td {
   text-decoration: line-through;
 }
 
-/* Actions Column */
+
 .actions {
   display: flex;
   flex-direction: column;
@@ -152,7 +152,7 @@ td {
   align-items: center;
 }
 
-/* Action Buttons - Gradient Style */
+
 .actions button {
   height: 40px;
   font-size: 0.95rem;
@@ -166,7 +166,7 @@ td {
   cursor: pointer;
 }
 
-/* Cancel/Remove buttons - Red gradient */
+
 .actions button[color="warn"],
 .actions button:not([color]) {
   background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
@@ -180,7 +180,7 @@ td {
   box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
 }
 
-/* Rating Stars */
+
 .rating-stars {
   display: flex;
   gap: 6px;
@@ -202,7 +202,7 @@ td {
   color: #ffc107;
 }
 
-/* Summary Section */
+
 .cart-summary {
   display: flex;
   justify-content: space-between;
@@ -210,12 +210,12 @@ td {
   gap: 32px;
 }
 
-/* Summary Card - Direct Animation */
+
 .cart-content > mat-card {
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
-/* Summary Details */
+
 .summary-details {
   display: flex;
   flex-direction: column;
@@ -255,7 +255,7 @@ td {
   text-decoration: line-through;
 }
 
-/* Checkout Actions */
+
 .checkout-actions {
   display: flex;
   flex-direction: column;
@@ -302,7 +302,7 @@ td {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Responsive Design */
+
 @media (max-width: 968px) {
   .wrapper {
     padding: 24px 16px;
@@ -356,7 +356,7 @@ td {
   }
 }
 
-/* Angular Material Overrides */
+
 .mat-mdc-table {
   background: transparent;
 }
@@ -369,7 +369,7 @@ td {
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* Material Card Overrides */
+
 ::ng-deep .cart-content mat-card {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -381,7 +381,7 @@ td {
   padding: 24px !important;
 }
 
-/* Snackbar */
+
 :host ::ng-deep .success-snackbar {
   background-color: #4caf50;
   color: white;

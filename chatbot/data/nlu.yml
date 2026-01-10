@@ -178,7 +178,7 @@ nlu:
       - toys from year [2022](date_year_criteria) for [boys](target_group_criteria) with rating [4](rating_criteria)
       - year [2023](date_year_criteria) toys under [5000](price_criteria)
 
-  # LOOKUP TABLES
+  
   - lookup: type_criteria
     examples: |
       - slagalica
@@ -212,7 +212,7 @@ nlu:
       - sve
       - svi
 
-  # SYNONYMS
+ 
   - synonym: boys
     examples: |
       - boy

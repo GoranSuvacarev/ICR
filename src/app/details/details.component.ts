@@ -41,13 +41,13 @@ export class DetailsComponent {
   public reserveToy(quantity?: number) {
     const qty = quantity || this.selectedQuantity || 1;
 
-    // Validate quantity
+    
     if (qty < 1 || qty > 100) {
       this.utils.showSnackBar('Količina mora biti između 1 i 100', 'error', this.snackBar);
       return;
     }
 
-    // Create multiple reservations based on quantity
+ 
     let successCount = 0;
     for (let i = 0; i < qty; i++) {
       const result = UserService.createReservation({
@@ -74,7 +74,6 @@ export class DetailsComponent {
       } else {
         this.utils.showSnackBar(`${successCount} od ${qty} uspešno dodato u korpu`, 'success', this.snackBar);
       }
-      // Reset quantity to 1 after successful add
       this.selectedQuantity = 1;
     } else {
       this.utils.showSnackBar('Morate biti ulogovani kako biste rezervisali igračku', 'error', this.snackBar);

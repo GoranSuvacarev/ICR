@@ -1,15 +1,15 @@
 <div class="wrapper">
-  <!-- Empty Cart State -->
+  
   <mat-card appearance="outlined" *ngIf="cart!.length == 0" class="no-order">
     <i class="fa-solid fa-cart-shopping" style="font-size: 4rem; opacity: 0.3; margin-bottom: 20px;"></i>
     <h1>Korpa je prazna!</h1>
     <p>Dodajte igračke u korpu da biste nastavili sa kupovinom.</p>
   </mat-card>
 
-  <!-- Cart with Items -->
+  
   <div *ngIf="cart!.length > 0" class="cart-content">
 
-    <!-- Header -->
+   
     <div class="cart-header">
       <h1>
         <i class="fa-solid fa-cart-shopping"></i>
@@ -17,11 +17,11 @@
       </h1>
     </div>
 
-    <!-- Table -->
+    
     <div class="table-container">
       <table mat-table [dataSource]="cart!" class="mat-elevation-z2">
 
-        <!-- Name Column -->
+       
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-tag"></i> Naziv
@@ -29,7 +29,7 @@
           <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
 
-        <!-- Description Column -->
+        
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-align-left"></i> Opis
@@ -37,7 +37,7 @@
           <td mat-cell *matCellDef="let element">{{element.description}}</td>
         </ng-container>
 
-        <!-- Type Column -->
+        
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-cube"></i> Tip
@@ -45,7 +45,7 @@
           <td mat-cell *matCellDef="let element">{{element.type}}</td>
         </ng-container>
 
-        <!-- Age Group Column -->
+        
         <ng-container matColumnDef="ageGroup">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-child"></i> Uzrast
@@ -53,7 +53,7 @@
           <td mat-cell *matCellDef="let element">{{element.ageGroup}}</td>
         </ng-container>
 
-        <!-- Target Group Column -->
+      
         <ng-container matColumnDef="targetGroup">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-users"></i> Ciljna grupa
@@ -61,7 +61,7 @@
           <td mat-cell *matCellDef="let element">{{element.targetGroup}}</td>
         </ng-container>
 
-        <!-- Production Date Column -->
+        
         <ng-container matColumnDef="productionDate">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-calendar"></i> Datum proizvodnje
@@ -69,7 +69,7 @@
           <td mat-cell *matCellDef="let element">{{element.productionDate}}</td>
         </ng-container>
 
-        <!-- Price Column -->
+        
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-money-bill"></i> Cena
@@ -82,7 +82,7 @@
           </td>
         </ng-container>
 
-        <!-- Status Column -->
+        
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-circle-info"></i> Status
@@ -100,21 +100,21 @@
           </td>
         </ng-container>
 
-        <!-- Actions Column -->
+       
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>
             <i class="fa-solid fa-gear"></i> Akcije
           </th>
           <td mat-cell *matCellDef="let element" class="actions">
 
-            <!-- Reserved Status - Cancel Button Only -->
+            
             <div *ngIf="element.status === 'rezervisano'">
               <button type="button" (click)="doCancel(element)">
                 <i class="fa-solid fa-ban"></i> Otkaži
               </button>
             </div>
 
-            <!-- Arrived Status - Rating + Remove -->
+            
             <div *ngIf="element.status === 'pristiglo'" style="display: flex; flex-direction: column; gap: 8px;">
               <div class="rating-stars">
                 <i *ngFor="let star of [1, 2, 3, 4, 5]"
@@ -128,7 +128,7 @@
               </button>
             </div>
 
-            <!-- Cancelled Status - Remove Button Only -->
+            
             <div *ngIf="element.status === 'otkazano'">
               <button type="button" (click)="doRemove(element)">
                 <i class="fa-solid fa-trash"></i> Obriši
@@ -143,12 +143,12 @@
       </table>
     </div>
 
-    <!-- Summary & Checkout Section -->
+    
     <mat-card class="mat-elevation-z2">
       <mat-card-content>
         <div class="cart-summary">
 
-          <!-- Summary Details (Left) -->
+          
           <div class="summary-details">
             <div class="summary-row">
               <span class="summary-label">Ukupna cena:</span>
@@ -156,7 +156,7 @@
             </div>
           </div>
 
-          <!-- Checkout Actions (Right) -->
+          
           <div class="checkout-actions">
             <button
               class="checkout-button"
