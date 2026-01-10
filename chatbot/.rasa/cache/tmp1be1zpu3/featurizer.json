@@ -1,0 +1,75 @@
+{
+  "type": "IntentMaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "affirm": 0,
+        "all_toys": 1,
+        "back": 2,
+        "bot_challenge": 3,
+        "deny": 4,
+        "filter_toys": 5,
+        "goodbye": 6,
+        "greet": 7,
+        "hello_world": 8,
+        "mood_great": 9,
+        "mood_unhappy": 10,
+        "nlu_fallback": 11,
+        "out_of_scope": 12,
+        "reserve_toy": 13,
+        "reset_filter": 14,
+        "restart": 15,
+        "search_toy": 16,
+        "session_start": 17
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_hello_world": 13,
+        "action_all_toys": 14,
+        "action_search_toy": 15,
+        "action_filter_toys": 16,
+        "action_reset_filter": 17,
+        "action_reserve_toy": 18,
+        "utter_cheer_up": 19,
+        "utter_did_that_help": 20,
+        "utter_goodbye": 21,
+        "utter_greet": 22,
+        "utter_happy": 23,
+        "utter_iamabot": 24
+      },
+      "entities": {
+        "age_group_criteria": 0,
+        "date_from_criteria": 1,
+        "date_to_criteria": 2,
+        "desc_criteria": 3,
+        "price_criteria": 4,
+        "rating_criteria": 5,
+        "reservation_criteria": 6,
+        "search_criteria": 7,
+        "target_group_criteria": 8,
+        "type_criteria": 9
+      },
+      "slots": {
+        "reservation_criteria_0": 0,
+        "reservation_criteria_1": 1
+      },
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

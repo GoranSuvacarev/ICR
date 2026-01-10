@@ -55,6 +55,24 @@ nlu:
     - look up [Kreativni set za modelovanje](search_criteria)
     - do you sell [Traktor sa prikolicom](search_criteria)
 
+- regex: search_criteria
+  examples: |
+    - (?<=toy with name ).*
+    - (?<=find toy called ).*
+    - (?<=show me the toy ).*
+    - (?<=I want the toy ).*
+    - (?<=get details for ).*
+    - (?<=do you have ).*
+    - (?<=look for toy ).*
+    - (?<=search for ).*
+    - (?<=find ).*(?= toy)
+    - (?<=I’m looking for ).*
+    - (?<=show ).*
+    - (?<=get ).*(?= information)
+    - (?<=toy named ).*
+    - (?<=look up ).*
+    - (?<=do you sell ).*
+
 - intent: filter_toys
   examples: |
     - toys with description [Edukativna drvena slagalica sa motivima životinja](desc_criteria)
@@ -121,23 +139,6 @@ nlu:
     - muzička igračka
     - edukativna igračka
 
-- regex: search_criteria
-  examples: |
-    - (?<=toy with name ).*
-    - (?<=find toy called ).*
-    - (?<=show me the toy ).*
-    - (?<=I want the toy ).*
-    - (?<=get details for ).*
-    - (?<=do you have ).*
-    - (?<=look for toy ).*
-    - (?<=search for ).*
-    - (?<=find ).*(?= toy)
-    - (?<=I’m looking for ).*
-    - (?<=show ).*
-    - (?<=get ).*(?= information)
-    - (?<=toy named ).*
-    - (?<=look up ).*
-    - (?<=do you sell ).*
 
 - regex: desc_criteria
   examples: |
@@ -145,6 +146,7 @@ nlu:
 
 - regex: date_from_criteria
   examples: |
+    - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
     - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
 
 - regex: date_to_criteria
@@ -159,6 +161,29 @@ nlu:
   examples: |
     - \b[0-9]{3,6}\b
 
+- intent: reserve_toy
+  examples: |
+    - reserve toy [Figura dinosaurusa](reservation_criteria)
+    - reserve toy name [Drvena slagalica životinje](reservation_criteria)
+    - reserve [Mala drvena slagalica](reservation_criteria)
+    - reserve [Velika plišana igračka](reservation_criteria)
+    - I want to reserve [Autić na daljinski](reservation_criteria)
+    - please reserve [Superheroj figura](reservation_criteria)
+    - reserve the toy [Edukativna slagalica](reservation_criteria)
+    - can you reserve [Drvena kocka sa slovima](reservation_criteria)
+    - reserve me [Drvena vozila set](reservation_criteria)
+    - add to cart [Superheroj figura](reservation_criteria)
+
+- regex: reservation_criteria
+  examples: |
+    - (?<=reserve toy named ).*
+    - (?<=reserve toy ).*
+    - (?<=reserve ).*
+    - (?<=I want to reserve ).*
+    - (?<=please reserve ).*
+    - (?<=can you reserve ).*
+    - (?<=reserve me ).*
+    - (?<=add to cart ).*
 
 - intent: reset_filter
   examples: |

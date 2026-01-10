@@ -64,10 +64,10 @@ export class AppComponent {
           })
           return
         }
-
+    
         for (let message of rsp.data) {
           if (message.attachment != null) {
-        
+            console.log(message.attachment.type)
             if(message.attachment.type == "all_toys" && Array.isArray(message.attachment.data)) {
               let html = ''
               for (let toy of message.attachment.data) {
@@ -101,24 +101,33 @@ export class AppComponent {
                   return obj.name.toLowerCase().includes(name.toLowerCase())
                 })[0]
 
-              let html = ''
-              html += `<ul class='list-unstyled'>`
-              html += `<li>Title: ${toy.name}</li>`
-              html += `<li>Type: ${toy.type.name}</li>`
-              html += `<li>Age group: ${toy.ageGroup.name}</li>`
-              html += `<li>Target group: ${toy.targetGroup}</li>`
-              html += `<li>Price: ${toy.price}</li>`
-              const rating = this.utils.calculateRating(toy)
-              html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
-              html += `<li>Production date: ${toy.productionDate}</li>`
-              html += `</ul>`
-              html += `<p>${toy.description}</p>`
-              html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
-              
-              this.messages.push({
-                type: 'bot',
-                text: html
-              })
+              if(toy){
+                let html = ''
+                html += `<ul class='list-unstyled'>`
+                html += `<li>Title: ${toy.name}</li>`
+                html += `<li>Type: ${toy.type.name}</li>`
+                html += `<li>Age group: ${toy.ageGroup.name}</li>`
+                html += `<li>Target group: ${toy.targetGroup}</li>`
+                html += `<li>Price: ${toy.price}</li>`
+                const rating = this.utils.calculateRating(toy)
+                html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
+                html += `<li>Production date: ${toy.productionDate}</li>`
+                html += `</ul>`
+                html += `<p>${toy.description}</p>`
+                html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
+                
+                this.messages.push({
+                  type: 'bot',
+                  text: html
+                })
+              }
+
+              else{
+                this.messages.push({
+                  type: 'bot',
+                  text: "No toy found"
+                })
+              }
 
               continue
             }
@@ -136,7 +145,7 @@ export class AppComponent {
               const age_group = message.attachment.filters.age_group
               var target_group = message.attachment.filters.target_group
               if (target_group != null) {
-                if (target_group == "kids") target_group = "svi";
+                if (target_group == "all") target_group = "svi";
                 if (target_group == "boys") target_group = "dečak";
                 if (target_group == "girls") target_group = "devojčica";
               }
@@ -145,17 +154,16 @@ export class AppComponent {
               const price = message.attachment.filters.price
               const rating = message.attachment.filters.rating
 
-              console.log(desc)
-              console.log(type)
-              console.log(age_group)
-              console.log(target_group)
-              console.log(dateFrom)
-              console.log(dateTo)
-              console.log(price)
+              console.log("desc: " + desc)
+              console.log("type: " + type)
+              console.log("ageGroup: " + age_group)
+              console.log("targetGroup: " + target_group)
+              console.log("dateFrom: " + dateFrom)
+              console.log("dateTo: "+ dateTo)
+              console.log("price: "+ price)
               console.log("rating: " + rating)
               console.log("------")
               
-              // Toys with type slagalica for kids under 5000
               console.log(toys)
 
               const filteredToys: ToyModel[] = toys
@@ -178,12 +186,8 @@ export class AppComponent {
                   return false
                 })
                 .filter(obj => {
-                  console.log("BEFORE")
                   if (target_group == null) return true
-                  console.log(obj.targetGroup)
-                  console.log(target_group)
                   if (obj.targetGroup == target_group) {
-                    console.log("AFTER")
                     return true
                   }
                   return false
@@ -229,19 +233,82 @@ export class AppComponent {
                 html += `<p>${toy.description}</p>`
                 html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
               }
-              this.messages.push({
-                type: 'bot',
-                text: html
-              })
+
+              if(filteredToys.length === 0){
+                this.messages.push({
+                  type: 'bot',
+                  text: "No toys found"
+                })
+              }
+
+              else{
+                this.messages.push({
+                  type: 'bot',
+                  text: html
+                })
+              }
+              
+
+              continue
+            }
+
+            if(message.attachment.type == "reserve_toy" && Array.isArray(message.attachment.data)) {
+
+              if(this.service.getActiveUser()){
+                const toys: ToyModel[] = message.attachment.data
+
+                const name = message.attachment.search
+
+                const toy: ToyModel = toys.filter(obj => {
+                    return obj.name.toLowerCase().includes(name.toLowerCase())
+                  })[0]
+
+                if(toy){
+                  UserService.createReservation({
+                    id: new Date().getTime(),
+                    name: toy.name,
+                    description: toy.description,
+                    type: toy.type.name,
+                    ageGroup: toy.ageGroup.name,
+                    targetGroup: toy.targetGroup,
+                    productionDate: toy.productionDate,
+                    price: toy.price,
+                    status: 'rezervisano',
+                    rating: 0
+                  })
+
+                  this.messages.push({
+                    type: 'bot',
+                    text: "Adding to cart"
+                  })
+                }
+
+                else{
+                  this.messages.push({
+                    type: 'bot',
+                    text: "There is no such toy"
+                  })
+                }
+                
+                
+              }
+
+              else {
+                this.messages.push({
+                  type: 'bot',
+                  text: "You must be logged in to reserve toys"
+                })
+              }
 
               continue
             }
           }
-
+        
           this.messages.push({
             type: 'bot',
             text: message.text
           })
+          
         }
 
         this.messages = this.messages.filter(m => {

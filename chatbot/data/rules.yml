@@ -37,4 +37,9 @@ rules:
   - intent: reset_filter
   - action: action_reset_filter
 
+- rule: 'Reserve toy'
+  steps:
+  - intent: reserve_toy
+  - action: action_reserve_toy
+
 

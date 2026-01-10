@@ -56,21 +56,6 @@ export class UtilsService {
     return Math.round(rating/reviewCount)
   }
 
-  public generateChatbotToyDetails(html: String, toy: ToyModel){
-    html += `<ul class='list-unstyled'>`
-    html += `<li>Title: ${toy.name}</li>`
-    html += `<li>Type: ${toy.type.name}</li>`
-    html += `<li>Age group: ${toy.ageGroup.name}</li>`
-    html += `<li>Target group: ${toy.targetGroup}</li>`
-    html += `<li>Price: ${toy.price}</li>`
-    const rating = this.calculateRating(toy)
-    html += `<li>Rating: ${rating > 0 ? rating : 'No Reviews'}</li>`
-    html += `<li>Production date: ${toy.productionDate}</li>`
-    html += `</ul>`
-    html += `<p>${toy.description}</p>`
-    html += `<a href='http://localhost:4200/details/${toy.permalink}'>Details</a>`
-    return html;
-  }
   
 }
 

@@ -1,0 +1,122 @@
+[
+  {
+    "name": "date_from_criteria",
+    "pattern": "(?<=produced between )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "date_from_criteria",
+    "pattern": "(?<=produced between )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "date_to_criteria",
+    "pattern": "(?<=and )\\d{1,2}/\\d{1,2}/\\d{4}"
+  },
+  {
+    "name": "desc_criteria",
+    "pattern": "(?<=with description )(.+?\\.)(?= for | under | age | price |$)"
+  },
+  {
+    "name": "price_criteria",
+    "pattern": "\\b[0-9]{3,6}\\b"
+  },
+  {
+    "name": "rating_criteria",
+    "pattern": "\\b[1-5]\\b"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=I want to reserve ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=add to cart ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=can you reserve ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=please reserve ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=reserve ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=reserve me ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=reserve toy ).*"
+  },
+  {
+    "name": "reservation_criteria",
+    "pattern": "(?<=reserve toy named ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=I want the toy ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=I’m looking for ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=do you have ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=do you sell ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=find ).*(?= toy)"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=find toy called ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=get ).*(?= information)"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=get details for ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=look for toy ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=look up ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=search for ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=show ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=show me the toy ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=toy named ).*"
+  },
+  {
+    "name": "search_criteria",
+    "pattern": "(?<=toy with name ).*"
+  },
+  {
+    "name": "type_criteria",
+    "pattern": "(\\bslagalica\\b|\\bfigura\\b|\\bslikovnica\\b|\\bkreativni\\ set\\b|\\bvozilo\\b|\\bplišana\\ igračka\\b|\\bdruštvena\\ igra\\b|\\bkonstruktorski\\ set\\b|\\bmuzička\\ igračka\\b|\\bedukativna\\ igračka\\b)"
+  }
+]
