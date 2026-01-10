@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import {UtilsService} from '../../services/utils.service';
@@ -15,7 +15,7 @@ import { TypeModel } from '../../models/type.model';
 
 @Component({
   selector: 'app-signup',
-  imports: [MatCardModule, NgFor, RouterLink, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatSelectModule, MatSnackBarModule],
+  imports: [MatCardModule, NgFor, NgIf, RouterLink, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatSelectModule, MatSnackBarModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -31,6 +31,11 @@ export class SignupComponent {
   public address = ''
   public type = ''
 
+  // Regex patterns for validation
+  private emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  private usernamePattern = /^[a-zA-Z0-9_-]+$/;
+  private phonePattern = /^[0-9]{9,10}$/;
+
   public constructor(private router: Router, public utils: UtilsService, private snackBar: MatSnackBar) {
     ToyService.getTypes()
       .then(rsp => {
@@ -44,8 +49,34 @@ export class SignupComponent {
   }
 
   public doSignup() {
-    if (this.email == '' || this.password == '') {
-      this.utils.showSnackBar('Email i lozinka su obavezna polja', 'error', this.snackBar);
+    // Validate all required fields
+    if (!this.type) {
+      this.utils.showSnackBar('Morate odabrati omiljeni žanr', 'error', this.snackBar);
+      return;
+    }
+
+    if (!this.email || !this.emailPattern.test(this.email)) {
+      this.utils.showSnackBar('Unesite validnu email adresu', 'error', this.snackBar);
+      return;
+    }
+
+    if (!this.username || this.username.length < 3 || this.username.length > 20 || !this.usernamePattern.test(this.username)) {
+      this.utils.showSnackBar('Username mora imati 3-20 karaktera (slova, brojevi, _, -)', 'error', this.snackBar);
+      return;
+    }
+
+    if (!this.phone || !this.phonePattern.test(this.phone)) {
+      this.utils.showSnackBar('Telefon mora imati 9-10 cifara', 'error', this.snackBar);
+      return;
+    }
+
+    if (!this.address || this.address.length < 5 || this.address.length > 100) {
+      this.utils.showSnackBar('Adresa mora imati najmanje 5 karaktera', 'error', this.snackBar);
+      return;
+    }
+
+    if (!this.password || this.password.length < 6) {
+      this.utils.showSnackBar('Šifra mora imati najmanje 6 karaktera', 'error', this.snackBar);
       return;
     }
 

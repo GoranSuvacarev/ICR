@@ -12,7 +12,7 @@ import { ToyModel } from '../../models/toy.model';
 import { ToyService } from '../../services/toy.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms'; // or ReactiveFormsModule
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -26,8 +26,6 @@ export class DetailsComponent {
 
   public toy: ToyModel | null = null
   public error: string | null = null
-  isDescriptionExpanded: boolean = false;
-  maxDescriptionLength: number = 800;
   selectedQuantity: number = 1;
 
   public constructor(private route: ActivatedRoute, public utils: UtilsService, private snackBar: MatSnackBar) {
@@ -41,48 +39,45 @@ export class DetailsComponent {
   }
 
   public reserveToy(quantity?: number) {
-  const qty = quantity || this.selectedQuantity || 1;
+    const qty = quantity || this.selectedQuantity || 1;
 
-  const result = UserService.createReservation({
-    id: new Date().getTime(),
-    name: this.toy!.name,
-    description: this.toy!.description,
-    type: this.toy!.type.name,
-    ageGroup: this.toy!.ageGroup.name,
-    targetGroup: this.toy!.targetGroup,
-    productionDate: this.toy!.productionDate,
-    price: this.toy!.price,
-    status: 'rezervisano',
-    rating: 0
-  });
-
-  if (result) {
-    this.utils.showSnackBar(`Igračka uspešno dodata u korpu (${qty}x)`, 'success', this.snackBar);
-  } else {
-    this.utils.showSnackBar('Morate biti ulogovani kako biste rezervisali igračku', 'error', this.snackBar);
-  }
-}
-
-  toggleDescription(): void {
-    this.isDescriptionExpanded = !this.isDescriptionExpanded;
-  }
-
-  getTruncatedDescription(): string {
-    if (!this.toy || !this.toy.description) {
-      return '';
+    // Validate quantity
+    if (qty < 1 || qty > 100) {
+      this.utils.showSnackBar('Količina mora biti između 1 i 100', 'error', this.snackBar);
+      return;
     }
 
-    if (this.isDescriptionExpanded || this.toy.description.length <= this.maxDescriptionLength) {
-      return this.toy.description;
+    // Create multiple reservations based on quantity
+    let successCount = 0;
+    for (let i = 0; i < qty; i++) {
+      const result = UserService.createReservation({
+        id: new Date().getTime() + i,
+        name: this.toy!.name,
+        description: this.toy!.description,
+        type: this.toy!.type.name,
+        ageGroup: this.toy!.ageGroup.name,
+        targetGroup: this.toy!.targetGroup,
+        productionDate: this.toy!.productionDate,
+        price: this.toy!.price,
+        status: 'rezervisano',
+        rating: 0
+      });
+
+      if (result) {
+        successCount++;
+      }
+    }
+
+    if (successCount > 0) {
+      if (successCount === qty) {
+        this.utils.showSnackBar(`${qty}x "${this.toy!.name}" uspešno dodato u korpu`, 'success', this.snackBar);
+      } else {
+        this.utils.showSnackBar(`${successCount} od ${qty} uspešno dodato u korpu`, 'success', this.snackBar);
+      }
+      // Reset quantity to 1 after successful add
+      this.selectedQuantity = 1;
     } else {
-      return this.toy.description.substring(0, this.maxDescriptionLength) + '...';
+      this.utils.showSnackBar('Morate biti ulogovani kako biste rezervisali igračku', 'error', this.snackBar);
     }
   }
-
-  shouldShowMoreButton(): boolean {
-    return Boolean(this.toy?.description &&
-      this.toy.description.length > this.maxDescriptionLength);
-  }
-
-
 }

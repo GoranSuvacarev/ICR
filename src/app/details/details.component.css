@@ -225,6 +225,7 @@
 /* Quantity Field */
 .quantity-field {
   flex: 0 0 150px;
+  flex-direction: row;
 }
 
 ::ng-deep .quantity-field .mat-mdc-text-field-wrapper {

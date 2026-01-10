@@ -1,47 +1,111 @@
 <mat-card class="auth-card">
-    <mat-card-header>
-        <h1>Registracija</h1>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field class="full-width">
-        <mat-label>Odaberi omiljeni žanr</mat-label>
-        <mat-select [(ngModel)]="type">
-          <mat-option *ngFor="let type of typeNames" [value]="type">
-            {{type}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput placeholder="Unesi svoj email..." [(ngModel)]="email">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Username</mat-label>
-            <input type="text" matInput placeholder="Unesi svoj username..." [(ngModel)]="username">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Telefon</mat-label>
-            <input type="number" min="0" minlength="9" maxlength="10"  matInput placeholder="Unesi svoj telefon..." [(ngModel)]="phone">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Adresa</mat-label>
-            <input type="text" matInput placeholder="Unesi svoju adresu..." [(ngModel)]="address">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Šifra</mat-label>
-            <input type="password" matInput placeholder="Unesi svoj šifru..." [(ngModel)]="password">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <mat-label>Ponovi šifru</mat-label>
-            <input type="password" matInput placeholder="Ponovi svoju šifru..." [(ngModel)]="repeatPassword">
-        </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-        <button type="button" mat-raised-button (click)="doSignup()">
-            <i class="fa-solid fa-right-to-bracket"></i> Registruj se!
-        </button>
-        <a mat-button routerLink="/login">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Već imam nalog
-        </a>
-    </mat-card-actions>
+  <mat-card-header>
+    <h1><i class="fa-solid fa-user-plus"></i> Registracija</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field class="full-width">
+      <mat-label>Odaberi omiljeni žanr</mat-label>
+      <mat-select [(ngModel)]="type" required>
+        <mat-option *ngFor="let type of typeNames" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        placeholder="Unesi svoj email..."
+        [(ngModel)]="email"
+        required
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+        #emailInput="ngModel">
+      <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+        Unesite validnu email adresu
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Username</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Unesi svoj username..."
+        [(ngModel)]="username"
+        required
+        minlength="3"
+        maxlength="20"
+        pattern="[a-zA-Z0-9_-]+"
+        #usernameInput="ngModel">
+      <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
+        Username mora imati 3-20 karaktera
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Telefon</mat-label>
+      <input
+        type="tel"
+        matInput
+        placeholder="Unesi svoj telefon..."
+        [(ngModel)]="phone"
+        required
+        pattern="[0-9]{9,10}"
+        minlength="9"
+        maxlength="10"
+        #phoneInput="ngModel">
+      <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
+        Telefon mora imati 9-10 cifara
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Adresa</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Unesi svoju adresu..."
+        [(ngModel)]="address"
+        required
+        minlength="5"
+        maxlength="100"
+        #addressInput="ngModel">
+      <mat-error *ngIf="addressInput.invalid && addressInput.touched">
+        Adresa mora imati najmanje 5 karaktera
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Šifra</mat-label>
+      <input
+        type="password"
+        matInput
+        placeholder="Unesi svoj šifru..."
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        #passwordInput="ngModel">
+      <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
+        Šifra mora imati najmanje 6 karaktera
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Ponovi šifru</mat-label>
+      <input
+        type="password"
+        matInput
+        placeholder="Ponovi svoju šifru..."
+        [(ngModel)]="repeatPassword"
+        required
+        #repeatPasswordInput="ngModel">
+      <mat-error *ngIf="repeatPasswordInput.invalid && repeatPasswordInput.touched">
+        Ponovljena šifra je obavezna
+      </mat-error>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button type="button" mat-raised-button (click)="doSignup()">
+      <i class="fa-solid fa-check"></i> Registruj se!
+    </button>
+    <a mat-button routerLink="/login">
+      <i class="fa-solid fa-right-to-bracket"></i> Već imam nalog
+    </a>
+  </mat-card-actions>
 </mat-card>

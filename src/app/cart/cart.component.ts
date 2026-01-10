@@ -71,10 +71,10 @@ export class CartComponent {
       return;
     }
 
-    // Check for duplicates with already purchased items
     const arr = UserService.retrieveUsers();
     const arrivedItems = this.activeUser!.reservations.filter(r => r.status === "pristiglo");
 
+    // Check for duplicates with already purchased items
     for (let reservedItem of reservedItems) {
       for (let arrivedItem of arrivedItems) {
         if (reservedItem.name === arrivedItem.name && reservedItem.id !== arrivedItem.id) {
@@ -92,17 +92,54 @@ export class CartComponent {
       }
     }
 
-    // Process all reserved items
-    let successCount = 0;
+    // Group reserved items by product name to handle duplicates
+    const itemsByName = new Map<string, ReservationModel[]>();
     for (let item of reservedItems) {
-      if (UserService.changeReservationStatus(item.id, 'pristiglo')) {
+      if (!itemsByName.has(item.name)) {
+        itemsByName.set(item.name, []);
+      }
+      itemsByName.get(item.name)!.push(item);
+    }
+
+    let totalItemsCount = reservedItems.length; // Total items including duplicates
+    let successCount = 0;
+    let removedCount = 0;
+
+    // First, remove all duplicates (keep only first of each product)
+    for (let [productName, items] of itemsByName) {
+      if (items.length > 1) {
+        // Remove duplicates (items after the first one)
+        for (let i = 1; i < items.length; i++) {
+          for (let user of arr) {
+            if (user.email === this.activeUser!.email) {
+              user.reservations = user.reservations.filter(r => r.id !== items[i].id);
+              removedCount++;
+            }
+          }
+        }
+      }
+    }
+
+    // Save all removals at once
+    if (removedCount > 0) {
+      localStorage.setItem('users', JSON.stringify(arr));
+    }
+
+    // Reload user data after removing duplicates
+    this.activeUser = UserService.getActiveUser();
+
+    // Now mark all remaining items as "pristiglo"
+    for (let [productName, items] of itemsByName) {
+      const itemToKeep = items[0];
+      if (UserService.changeReservationStatus(itemToKeep.id, 'pristiglo')) {
         successCount++;
       }
     }
 
+    this.loadCart();
+
     if (successCount > 0) {
-      this.loadCart();
-      this.utils.showSnackBar(`Uspešno kupljeno ${successCount} stavki!`, 'success', this.snackBar);
+      this.utils.showSnackBar(`Uspešno kupljeno ${totalItemsCount} ${totalItemsCount === 1 ? 'stavka' : 'stavki'}!`, 'success', this.snackBar);
     } else {
       this.utils.showSnackBar('Greška pri kupovini', 'error', this.snackBar);
     }
