@@ -72,7 +72,7 @@
   <div class="search_form">
     <mat-form-field class="search_input">
       <mat-label><i class="fa-solid fa-money-bill"></i> Maksimalna cena</mat-label>
-      <input matInput type="number" placeholder="Unesite cenu..." (keyup)="doFilter()" [(ngModel)]="priceInput" >
+      <input matInput type="number" placeholder="Unesite cenu..." (keyup)="doFilter()" [(ngModel)]="priceInput" min="0" max="7000">
     </mat-form-field>
   </div>
 
