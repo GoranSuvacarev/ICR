@@ -8,7 +8,7 @@
       <div class="toy-info">
 
         <h1 class="toy-title"> {{toy.name}}</h1>
-        
+
         <div class="toy-meta">
           <span class="rating" *ngIf="utils.calculateRating(toy) > 0; else noReviews">
             <i class="fa-solid fa-star"></i>
@@ -35,22 +35,19 @@
         </div>
 
         <div class="plot">
-          <strong>  Description:</strong>
-          {{toy.description}}
+          <strong>  Description: {{toy.description}}</strong>
         </div>
 
         <div class="plot">
-          <i class="fa-solid fa-hand-holding-dollar"></i>
-          <strong> Price:</strong>
-          {{toy.price}} DIN
+          <strong><i class="fa-solid fa-hand-holding-dollar"></i>Price: {{toy.price}} RSD</strong>
         </div>
 
-      
+
 <div class="screening-section">
   <mat-card class="screening-card">
     <mat-card-content class="screening-content">
 
-      
+
       <mat-form-field appearance="outline" class="quantity-field">
         <mat-label>Quantity</mat-label>
         <input
@@ -63,7 +60,7 @@
         >
       </mat-form-field>
 
-      
+
       <div class="screening-type" (click)="reserveToy(selectedQuantity)">
         <i class="fa-solid fa-cart-shopping"></i>  Dodaj u korpu
       </div>
