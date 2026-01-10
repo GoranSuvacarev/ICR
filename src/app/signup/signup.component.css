@@ -169,7 +169,6 @@ button[mat-raised-button] {
   border: none;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
   transition: all 0.3s ease;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 

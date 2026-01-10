@@ -15,7 +15,6 @@
 
 /* Page Title */
 .page-title {
-  text-transform: uppercase;
   font-size: 3rem;
   text-align: center;
   margin-top: 0;
@@ -258,7 +257,6 @@
   height: 50px;
   font-size: 1.1rem;
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: 12px;
   background: linear-gradient(135deg, #0F2027 0%, #2ECC71 100%);
@@ -465,7 +463,6 @@
   padding: 0 32px;
   font-size: 1.1rem;
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: 12px;
   background: linear-gradient(135deg, #0F2027 0%, #2ECC71 100%);

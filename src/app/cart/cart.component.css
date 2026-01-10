@@ -162,7 +162,6 @@ td {
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
 }
@@ -269,7 +268,6 @@ td {
   height: 60px;
   font-size: 1.2rem;
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0 32px;
   border-radius: 12px;
