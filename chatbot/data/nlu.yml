@@ -1,263 +1,326 @@
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - hello there
+      - good morning
+      - good evening
+      - moin
+      - hey there
+      - let's go
+      - hey dude
+      - goodmorning
+      - goodevening
+      - good afternoon
 
-- intent: hello_world
-  examples: |
-    - hello world
+  - intent: hello_world
+    examples: |
+      - hello world
 
-- intent: all_toys
-  examples: |
-    - list me all toys
-    - show me all toys
-    - I want to see all toys
-    - display all toys
-    - give me a list of all toys
-    - what toys do you have
-    - show all available toys
-    - I want all the toys
-    - can I see all the toys
-    - list every toy
-    - show me the full toy collection
-    - give me all the toys you have
-    - display every toy
-    - I want to browse all toys
+  - intent: all_toys
+    examples: |
+      - list me all toys
+      - show me all toys
+      - I want to see all toys
+      - display all toys
+      - give me a list of all toys
+      - what toys do you have
+      - show all available toys
+      - I want all the toys
+      - can I see all the toys
+      - list every toy
+      - show me the full toy collection
+      - give me all the toys you have
+      - display every toy
+      - I want to browse all toys
 
-- intent: search_toy
-  examples: |
-    - toy with name [Drvena slagalica životinje](search_criteria)
-    - find toy called [Mala slikovnica boje](search_criteria)
-    - show me the toy [Superheroj figura](search_criteria)
-    - I want the toy [Set za crtanje](search_criteria)
-    - get details for [Vatrogasni kamion](search_criteria)
-    - do you have [Plišana panda](search_criteria)
-    - look for toy [Monopol Junior](search_criteria)
-    - search for [LEGO Classic set](search_criteria)
-    - find [Muzički bubanj](search_criteria) toy
-    - I’m looking for [Pametni globus](search_criteria)
-    - show [Drvena abeceda](search_criteria)
-    - toy named [Figura dinosaurusa](search_criteria)
-    - look up [Kreativni set za modelovanje](search_criteria)
-    - do you sell [Traktor sa prikolicom](search_criteria)
+  - intent: search_toy
+    examples: |
+      - toy with name [Drvena slagalica životinje](search_criteria)
+      - find toy called [Mala slikovnica boje](search_criteria)
+      - show me the toy [Superheroj figura](search_criteria)
+      - I want the toy [Set za crtanje](search_criteria)
+      - get details for [Vatrogasni kamion](search_criteria)
+      - do you have [Plišana panda](search_criteria)
+      - look for toy [Monopol Junior](search_criteria)
+      - search for [LEGO Classic set](search_criteria)
+      - find [Muzički bubanj](search_criteria) toy
+      - I'm looking for [Pametni globus](search_criteria)
+      - show [Drvena abeceda](search_criteria)
+      - toy named [Figura dinosaurusa](search_criteria)
+      - look up [Kreativni set za modelovanje](search_criteria)
+      - do you sell [Traktor sa prikolicom](search_criteria)
 
-- regex: search_criteria
-  examples: |
-    - (?<=toy with name ).*
-    - (?<=find toy called ).*
-    - (?<=show me the toy ).*
-    - (?<=I want the toy ).*
-    - (?<=get details for ).*
-    - (?<=do you have ).*
-    - (?<=look for toy ).*
-    - (?<=search for ).*
-    - (?<=find ).*(?= toy)
-    - (?<=I’m looking for ).*
-    - (?<=show ).*
-    - (?<=get ).*(?= information)
-    - (?<=toy named ).*
-    - (?<=look up ).*
-    - (?<=do you sell ).*
+  - intent: filter_toys
+    examples: |
+      - toys with description [Edukativna drvena slagalica sa motivima životinja](desc_criteria)
+      - find toys described as [Slikovnica za učenje boja kroz slike i reči](desc_criteria)
+      - show toys with description [Akciona figura popularnog superheroja od 15cm](desc_criteria)
+      - search for toys described as [Puzzle sa motivima životinja](desc_criteria)
+      - show me toys with description [Set za crtanje i bojenje](desc_criteria)
+      - find toys with description [Mekani plišani meda](desc_criteria)
+      - look for toys described as [Edukativni muzički instrument](desc_criteria)
 
-- intent: filter_toys
-  examples: |
-    - toys with description [Edukativna drvena slagalica sa motivima životinja](desc_criteria)
-    - find toys described as [Slikovnica za učenje boja kroz slike i reči](desc_criteria)
-    - show toys with description [Akciona figura popularnog superheroja od 15cm](desc_criteria)
-    - search for toys described as [Puzzle sa motivima životinja](desc_criteria)
-    - show me toys with description [Set za crtanje i bojenje](desc_criteria)
-    - find toys with description [Mekani plišani meda](desc_criteria)
-    - look for toys described as [Edukativni muzički instrument](desc_criteria)
+      - toys with type [slagalica](type_criteria)
+      - find toys of type [figura](type_criteria)
+      - show toys that are [slikovnica](type_criteria)
+      - toys of type [kreativni set](type_criteria)
+      - find toys of type [vozilo](type_criteria)
+      - show me [plišana igračka](type_criteria) toys
+      - I want [društvena igra](type_criteria)
 
-    - toys with type [slagalica](type_criteria)
-    - find toys of type [figura](type_criteria)
-    - show toys that are [slikovnica](type_criteria)
-    
-    - toys for age [0-2](age_group_criteria)
-    - toys suitable for age [3-5](age_group_criteria)
-    - find toys for age group [6-8](age_group_criteria)
+      - toys for age [0-2](age_group_criteria)
+      - toys suitable for age [3-5](age_group_criteria)
+      - find toys for age group [6-8](age_group_criteria)
+      - toys for age [8-10](age_group_criteria)
+      - show toys for age [10-12](age_group_criteria)
+      - toys for age [4-6](age_group_criteria)
+      - toys for age [7-9](age_group_criteria)
 
-    - toys for [boys](target_group_criteria)
-    - toys for [girls](target_group_criteria)
-    - toys for [all](target_group_criteria)
+      - toys for [boys](target_group_criteria)
+      - toys for [girls](target_group_criteria)
+      - toys for [all](target_group_criteria)
+      - toys for [dečake](target_group_criteria)
+      - toys for [devojčice](target_group_criteria)
+      - toys for [sve](target_group_criteria)
 
-    - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria)
-    - find toys produced between [01/05/2023](date_from_criteria) and [15/11/2023](date_to_criteria)
+      - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria)
+      - find toys produced between [01/05/2023](date_from_criteria) and [15/11/2023](date_to_criteria)
+      - toys from [01/01/2023](date_from_criteria) to [31/12/2023](date_to_criteria)
+      - show me toys made between [1/6/2024](date_from_criteria) and [30/12/2024](date_to_criteria)
+      - toys between [15/3/2022](date_from_criteria) and [20/8/2023](date_to_criteria)
+      - toys from [1/1/2020](date_from_criteria) to [31/12/2024](date_to_criteria)
 
-    - toys with price up to [5000](price_criteria)
-    - find toys cheaper than [3000](price_criteria)
-    - show toys under [2000](price_criteria)
-    - search for toys costing less than [4000](price_criteria)
+      - toys produced in year [2024](date_year_criteria)
+      - show me toys from year [2023](date_year_criteria)
+      - toys made in year [2022](date_year_criteria)
+      - find toys from year [2021](date_year_criteria)
+      - toys from year [2024](date_year_criteria)
+      - show me year [2023](date_year_criteria) toys
+      - year [2022](date_year_criteria) toys
+      - toys in year [2024](date_year_criteria)
+      - [2023](date_year_criteria) toys
+      - toys [2024](date_year_criteria)
+      - show [2022](date_year_criteria) toys
+      - find [2023](date_year_criteria) toys
 
-    - toys with rating [5](rating_criteria)
-    - toys rated [2](rating_criteria)
-    - find toys rated [4](rating_criteria)
-    - show toys rated [5](rating_criteria)
-    - search for toys with rating [1](rating_criteria)
+      - toys before year [2024](date_before_criteria)
+      - toys after year [2023](date_after_criteria)
+      - show me toys produced before year [2024](date_before_criteria)
+      - find toys made after year [2023](date_after_criteria)
+      - toys from before year [2023](date_before_criteria)
+      - toys from after year [2022](date_after_criteria)
+      - before year [2024](date_before_criteria)
+      - after year [2023](date_after_criteria)
+      - toys older than year [2024](date_before_criteria)
+      - toys newer than year [2023](date_after_criteria)
 
-    - toys with type [slagalica](type_criteria) for [boys](target_group_criteria)
-    - toys for age [6-8](age_group_criteria) under [4000](price_criteria)
-    - toys with description [educational puzzle](desc_criteria) for [all](target_group_criteria)
-    - toys with type [board game](type_criteria) for age [8-10](age_group_criteria)
-    - toys for [girls](target_group_criteria) under [3500](price_criteria)
-    - toys with type [slagalica](type_criteria) for [all](target_group_criteria) under [5000](price_criteria)
-    - toys with type [slagalica](type_criteria) for [girls](target_group_criteria) under [3000](price_criteria)
-    - find toys for age [4-6](age_group_criteria) with rating [5](rating_criteria)
-    - show toys described as [Edukativna slikovnica](desc_criteria) for [boys](target_group_criteria) under [2000](price_criteria)
-    - toys with type [lego set](type_criteria) for age [7-9](age_group_criteria) with rating [4](rating_criteria)
-    - look for toys for [toddlers](target_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria) under [1500](price_criteria)
-    - find toys with description [Mekani plišani meda](desc_criteria) for age [0-2](age_group_criteria) with rating [5](rating_criteria)
-    - toys for [boys](target_group_criteria) of type [figura](type_criteria) produced between [01/01/2024](date_from_criteria) and [31/12/2024](date_to_criteria)
-    - show toys under [2500](price_criteria) for age [3-5](age_group_criteria) with rating [4](rating_criteria)
-    - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria) for [boys](target_group_criteria)
-    - toys for age [3-5](age_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria)
+      - toys with price up to [5000](price_criteria)
+      - find toys cheaper than [3000](price_criteria)
+      - show toys under [2000](price_criteria)
+      - search for toys costing less than [4000](price_criteria)
+      - toys priced at [1500](price_criteria) or less
+      - toys under [2500](price_criteria)
+      - toys less than [3500](price_criteria)
+      - show me toys for [4000](price_criteria) or less
+      - toys up to [6000](price_criteria)
+      - find toys below [4500](price_criteria)
+      - toys for [3000](price_criteria)
+      - show me toys around [2000](price_criteria)
+      - I want toys under [5000](price_criteria)
+      - toys that cost less than [3000](price_criteria)
+      - toys cheaper than [4000](price_criteria)
+      - show toys priced under [2500](price_criteria)
+      - find me toys for [1500](price_criteria) or less
+      - toys with price [5000](price_criteria)
+      - toys with price under [4000](price_criteria)
+      - I need toys less than [3000](price_criteria)
 
-- lookup: type_criteria
-  examples: |
-    - slagalica
-    - figura
-    - slikovnica
-    - kreativni set
-    - vozilo
-    - plišana igračka
-    - društvena igra
-    - konstruktorski set
-    - muzička igračka
-    - edukativna igračka
+      - toys with rating [5](rating_criteria)
+      - toys rated [2](rating_criteria)
+      - find toys rated [4](rating_criteria)
+      - show toys rated [5](rating_criteria)
+      - search for toys with rating [1](rating_criteria)
+      - toys with rating [3](rating_criteria)
+      - show me [4](rating_criteria) star toys
+      - find [5](rating_criteria) star toys
+      - toys with [3](rating_criteria) stars
+      - I want toys with rating [4](rating_criteria)
 
+      - toys with type [slagalica](type_criteria) for [boys](target_group_criteria)
+      - toys for age [6-8](age_group_criteria) under [4000](price_criteria)
+      - toys with description [educational puzzle](desc_criteria) for [all](target_group_criteria)
+      - toys with type [board game](type_criteria) for age [8-10](age_group_criteria)
+      - toys for [girls](target_group_criteria) under [3500](price_criteria)
+      - toys with type [slagalica](type_criteria) for [all](target_group_criteria) under [5000](price_criteria)
+      - toys with type [slagalica](type_criteria) for [girls](target_group_criteria) under [3000](price_criteria)
+      - find toys for age [4-6](age_group_criteria) with rating [5](rating_criteria)
+      - show toys described as [Edukativna slikovnica](desc_criteria) for [boys](target_group_criteria) under [2000](price_criteria)
+      - toys with type [lego set](type_criteria) for age [7-9](age_group_criteria) with rating [4](rating_criteria)
+      - look for toys for [toddlers](target_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria) under [1500](price_criteria)
+      - find toys with description [Mekani plišani meda](desc_criteria) for age [0-2](age_group_criteria) with rating [5](rating_criteria)
+      - toys for [boys](target_group_criteria) of type [figura](type_criteria) produced between [01/01/2024](date_from_criteria) and [31/12/2024](date_to_criteria)
+      - show toys under [2500](price_criteria) for age [3-5](age_group_criteria) with rating [4](rating_criteria)
+      - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria) for [boys](target_group_criteria)
+      - toys for age [3-5](age_group_criteria) produced between [01/01/2023](date_from_criteria) and [31/12/2023](date_to_criteria)
+      - show me toys for age [6-8](age_group_criteria) less than [4000](price_criteria)
+      - I want [figura](type_criteria) toys under [3000](price_criteria)
+      - find toys for [girls](target_group_criteria) cheaper than [5000](price_criteria)
+      - toys with rating [5](rating_criteria) under [4000](price_criteria)
+      - show me [slagalica](type_criteria) for age [4-6](age_group_criteria) less than [2000](price_criteria)
+      - toys from year [2024](date_year_criteria) under [3000](price_criteria)
+      - toys before year [2024](date_before_criteria) with rating [5](rating_criteria)
+      - find toys after year [2023](date_after_criteria) for age [6-8](age_group_criteria)
+      - toys from year [2022](date_year_criteria) for [boys](target_group_criteria) with rating [4](rating_criteria)
+      - year [2023](date_year_criteria) toys under [5000](price_criteria)
 
-- regex: desc_criteria
-  examples: |
-    - (?<=with description )(.+?\.)(?= for | under | age | price |$)
+  # LOOKUP TABLES
+  - lookup: type_criteria
+    examples: |
+      - slagalica
+      - figura
+      - slikovnica
+      - kreativni set
+      - vozilo
+      - plišana igračka
+      - društvena igra
+      - konstruktorski set
+      - muzička igračka
+      - edukativna igračka
 
-- regex: date_from_criteria
-  examples: |
-    - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
-    - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
+  - lookup: age_group_criteria
+    examples: |
+      - 0-2
+      - 3-5
+      - 4-6
+      - 6-8
+      - 7-9
+      - 8-10
+      - 10-12
 
-- regex: date_to_criteria
-  examples: |
-    - (?<=and )\d{1,2}/\d{1,2}/\d{4}
+  - lookup: target_group_criteria
+    examples: |
+      - boys
+      - girls
+      - all
+      - dečaci
+      - devojčice
+      - sve
+      - svi
 
-- regex: rating_criteria
-  examples: |
-    - \b[1-5]\b
+  # SYNONYMS
+  - synonym: boys
+    examples: |
+      - boy
+      - dečaci
+      - dečak
 
-- regex: price_criteria
-  examples: |
-    - \b[0-9]{3,6}\b
+  - synonym: girls
+    examples: |
+      - girl
+      - devojčice
+      - devojčica
 
-- intent: reserve_toy
-  examples: |
-    - reserve toy [Figura dinosaurusa](reservation_criteria)
-    - reserve toy name [Drvena slagalica životinje](reservation_criteria)
-    - reserve [Mala drvena slagalica](reservation_criteria)
-    - reserve [Velika plišana igračka](reservation_criteria)
-    - I want to reserve [Autić na daljinski](reservation_criteria)
-    - please reserve [Superheroj figura](reservation_criteria)
-    - reserve the toy [Edukativna slagalica](reservation_criteria)
-    - can you reserve [Drvena kocka sa slovima](reservation_criteria)
-    - reserve me [Drvena vozila set](reservation_criteria)
-    - add to cart [Superheroj figura](reservation_criteria)
+  - synonym: all
+    examples: |
+      - sve
+      - svi
+      - both
 
-- regex: reservation_criteria
-  examples: |
-    - (?<=reserve toy named ).*
-    - (?<=reserve toy ).*
-    - (?<=reserve ).*
-    - (?<=I want to reserve ).*
-    - (?<=please reserve ).*
-    - (?<=can you reserve ).*
-    - (?<=reserve me ).*
-    - (?<=add to cart ).*
+  - intent: reserve_toy
+    examples: |
+      - reserve toy [Figura dinosaurusa](reservation_criteria)
+      - reserve toy name [Drvena slagalica životinje](reservation_criteria)
+      - reserve [Mala drvena slagalica](reservation_criteria)
+      - reserve [Velika plišana igračka](reservation_criteria)
+      - I want to reserve [Autić na daljinski](reservation_criteria)
+      - please reserve [Superheroj figura](reservation_criteria)
+      - reserve the toy [Edukativna slagalica](reservation_criteria)
+      - can you reserve [Drvena kocka sa slovima](reservation_criteria)
+      - reserve me [Drvena vozila set](reservation_criteria)
+      - add to cart [Superheroj figura](reservation_criteria)
 
-- intent: reset_filter
-  examples: |
-    - Reset filter
+  - intent: reset_filter
+    examples: |
+      - reset filter
+      - clear filters
+      - remove all filters
+      - start over
+      - reset search
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+  - intent: goodbye
+    examples: |
+      - cu
+      - good by
+      - cee you later
+      - good night
+      - bye
+      - goodbye
+      - have a nice day
+      - see you around
+      - bye bye
+      - see you later
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+  - intent: affirm
+    examples: |
+      - yes
+      - y
+      - indeed
+      - of course
+      - that sounds good
+      - correct
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+  - intent: deny
+    examples: |
+      - no
+      - n
+      - never
+      - I don't think so
+      - don't like that
+      - no way
+      - not really
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+  - intent: mood_great
+    examples: |
+      - perfect
+      - great
+      - amazing
+      - feeling like a king
+      - wonderful
+      - I am feeling very good
+      - I am great
+      - I am amazing
+      - I am going to save the world
+      - super stoked
+      - extremely good
+      - so so perfect
+      - so good
+      - so perfect
 
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+  - intent: mood_unhappy
+    examples: |
+      - my day was horrible
+      - I am sad
+      - I don't feel very well
+      - I am disappointed
+      - super sad
+      - I'm so sad
+      - sad
+      - very sad
+      - unhappy
+      - not good
+      - not very good
+      - extremly sad
+      - so saad
+      - so sad
 
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+  - intent: bot_challenge
+    examples: |
+      - are you a bot?
+      - are you a human?
+      - am I talking to a bot?
+      - am I talking to a human?

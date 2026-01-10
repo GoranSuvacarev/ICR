@@ -1,5 +1,5 @@
 from typing import Any, Text, Dict, List
-
+import re
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
@@ -17,7 +17,7 @@ class ActionHelloWorld(Action):
 
         dispatcher.utter_message(text="Hello World from Actions!")
         return []
-    
+
 class ActionAllToys(Action):
 
     def name(self) -> Text:
@@ -38,7 +38,7 @@ class ActionAllToys(Action):
             }
             dispatcher.utter_message(text='Here are the results', attachment=bot_response)
         else:
-            dispatcher.utter_message(text='No toys found') 
+            dispatcher.utter_message(text='No toys found')
         return []
 
 class ActionSearchToy(Action):
@@ -64,8 +64,27 @@ class ActionSearchToy(Action):
             }
             dispatcher.utter_message(text='Here are the results', attachment=bot_response)
         else:
-            dispatcher.utter_message(text='No toy found') 
+            dispatcher.utter_message(text='No toy found')
         return []
+
+def extract_number_from_text(text):
+    """Extract just the number from text like 'less than 4000' or 'under 3000'"""
+    if text is None:
+        return None
+
+    # If it's already a number, return it
+    if isinstance(text, (int, float)):
+        return text
+
+    # Convert to string
+    text = str(text)
+
+    # Try to find numbers in the text
+    numbers = re.findall(r'\d+', text)
+    if numbers:
+        return int(numbers[-1])  # Return the last number found
+
+    return None
 
 class ActionFilterToys(Action):
 
@@ -80,16 +99,21 @@ class ActionFilterToys(Action):
         rsp = requests.get(url)
         toys = rsp.json()
 
-    
+        # Get slots
         desc = tracker.get_slot("desc_criteria")
         toy_type = tracker.get_slot("type_criteria")
         age_group = tracker.get_slot("age_group_criteria")
         target_group = tracker.get_slot("target_group_criteria")
         dateFrom = tracker.get_slot("date_from_criteria")
         dateTo = tracker.get_slot("date_to_criteria")
-        price = tracker.get_slot("price_criteria")
-        rating = tracker.get_slot("rating_criteria")
+        price_raw = tracker.get_slot("price_criteria")
+        rating_raw = tracker.get_slot("rating_criteria")
 
+        # Extract numbers from price and rating
+        price = extract_number_from_text(price_raw)
+        rating = extract_number_from_text(rating_raw)
+
+        # Build filters dictionary
         filters = {}
 
         if desc:
@@ -104,11 +128,11 @@ class ActionFilterToys(Action):
             filters["dateFrom"] = dateFrom
         if dateTo:
             filters["dateTo"] = dateTo
-        if price:
+        if price is not None:
             filters["price"] = price
-        if rating:
+        if rating is not None:
             filters["rating"] = rating
-        
+
         if len(toys) > 0:
             bot_response = {
                 "type": "filter_toys",
@@ -117,7 +141,7 @@ class ActionFilterToys(Action):
             }
             dispatcher.utter_message(text='Here are the results', attachment=bot_response)
         else:
-            dispatcher.utter_message(text='No toys found') 
+            dispatcher.utter_message(text='No toys found')
         return []
 
 class ActionResetFilter(Action):
@@ -164,5 +188,5 @@ class ActionReserveToy(Action):
             }
             dispatcher.utter_message(attachment=bot_response)
         else:
-            dispatcher.utter_message(text='No toy found') 
+            dispatcher.utter_message(text='No toy found')
         return []

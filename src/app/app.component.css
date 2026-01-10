@@ -162,6 +162,7 @@ html, body {
 .chatbot-container button[mat-fab] {
   width: 64px;
   height: 64px;
+  margin-bottom: 64px;
   background: linear-gradient(135deg, #0F2027 0%, #2ECC71 100%) !important;
   box-shadow: 0 4px 20px rgba(46, 204, 113, 0.5);
   transition: all 0.3s ease;

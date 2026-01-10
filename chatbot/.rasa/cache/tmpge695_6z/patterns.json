@@ -1,0 +1,14 @@
+[
+  {
+    "name": "type_criteria",
+    "pattern": "(\\bslagalica\\b|\\bfigura\\b|\\bslikovnica\\b|\\bkreativni\\ set\\b|\\bvozilo\\b|\\bplišana\\ igračka\\b|\\bdruštvena\\ igra\\b|\\bkonstruktorski\\ set\\b|\\bmuzička\\ igračka\\b|\\bedukativna\\ igračka\\b)"
+  },
+  {
+    "name": "age_group_criteria",
+    "pattern": "(\\b0\\-2\\b|\\b3\\-5\\b|\\b4\\-6\\b|\\b6\\-8\\b|\\b7\\-9\\b|\\b8\\-10\\b|\\b10\\-12\\b)"
+  },
+  {
+    "name": "target_group_criteria",
+    "pattern": "(\\bboys\\b|\\bgirls\\b|\\ball\\b|\\bdečaci\\b|\\bdevojčice\\b|\\bsve\\b|\\bsvi\\b)"
+  }
+]
