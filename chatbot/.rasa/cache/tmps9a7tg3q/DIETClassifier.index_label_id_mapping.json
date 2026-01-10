@@ -1,0 +1,15 @@
+{
+  "0": "affirm",
+  "1": "all_toys",
+  "2": "bot_challenge",
+  "3": "deny",
+  "4": "filter_toys",
+  "5": "goodbye",
+  "6": "greet",
+  "7": "hello_world",
+  "8": "mood_great",
+  "9": "mood_unhappy",
+  "10": "reserve_toy",
+  "11": "reset_filter",
+  "12": "search_toy"
+}

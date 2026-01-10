@@ -78,7 +78,6 @@ export class CartComponent {
     for (let reservedItem of reservedItems) {
       for (let arrivedItem of arrivedItems) {
         if (reservedItem.name === arrivedItem.name && reservedItem.id !== arrivedItem.id) {
-          // Remove duplicate and skip checkout
           for (let user of arr) {
             if (user.email === this.activeUser!.email) {
               user.reservations = this.activeUser?.reservations.filter(r => r.id !== reservedItem.id) || [];
@@ -86,8 +85,6 @@ export class CartComponent {
               this.loadCart();
             }
           }
-          this.utils.showSnackBar('Duplikat stavke uklonjen iz korpe', 'error', this.snackBar);
-          return;
         }
       }
     }

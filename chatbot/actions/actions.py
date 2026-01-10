@@ -140,3 +140,29 @@ class ActionResetFilter(Action):
             SlotSet("price_criteria", None),
             SlotSet("rating_criteria", None)
         ]
+
+class ActionReserveToy(Action):
+
+    def name(self) -> Text:
+        return "action_reserve_toy"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        url = 'https://toy.pequla.com/api/toy'
+        rsp = requests.get(url)
+        toys = rsp.json()
+
+        reservation = tracker.get_slot("reservation_criteria")
+
+        if len(toys) > 0:
+            bot_response = {
+                "type": "reserve_toy",
+                "data": toys,
+                "search": reservation
+            }
+            dispatcher.utter_message(attachment=bot_response)
+        else:
+            dispatcher.utter_message(text='No toy found') 
+        return []

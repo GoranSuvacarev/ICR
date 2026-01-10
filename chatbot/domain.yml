@@ -13,6 +13,7 @@ intents:
   - search_toy
   - filter_toys
   - reset_filter
+  - reserve_toy
 
 slots:
   search_criteria:
@@ -69,6 +70,13 @@ slots:
     mappings:
       - type: from_entity
         entity: rating_criteria
+  reservation_criteria:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: reservation_criteria
+
 
 entities:
   - search_criteria
@@ -80,6 +88,7 @@ entities:
   - date_to_criteria
   - price_criteria
   - rating_criteria
+  - reservation_criteria
 
 responses:
   utter_greet:
@@ -107,6 +116,7 @@ actions:
   - action_search_toy
   - action_filter_toys
   - action_reset_filter
+  - action_reserve_toy
 
 session_config:
   session_expiration_time: 60
