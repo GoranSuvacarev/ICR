@@ -1,4 +1,4 @@
-# 🧸 Toy Store - Digital Toy Shopping Platform
+# 🧸 Toys & Co. - Digital Toy Shopping Platform
 
 A modern web application prototype for browsing, searching, and reserving toys for children. Built with Angular and powered by an intelligent Rasa-based chatbot assistant.
 
