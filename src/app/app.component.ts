@@ -58,6 +58,9 @@ export class AppComponent {
     RasaService.sendMessage(trimmedMessage)
       .then(rsp => {
         if (rsp.data.length == 0) {
+          console.log(rsp)
+          console.log(rsp.data)
+          console.log(rsp.status)
           this.messages.push({
             type: 'bot',
             text: "Sorry, I didn't understand your question!"
@@ -145,7 +148,7 @@ export class AppComponent {
               const age_group = message.attachment.filters.age_group
               var target_group = message.attachment.filters.target_group
               if (target_group != null) {
-                if (target_group == "all") target_group = "svi";
+                if (target_group == "for all") target_group = "svi";
                 if (target_group == "boys") target_group = "dečak";
                 if (target_group == "girls") target_group = "devojčica";
               }

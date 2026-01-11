@@ -58,27 +58,18 @@ slots:
     mappings:
       - type: from_entity
         entity: date_to_criteria
- 
   price_criteria:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: price_criteria
- 
   rating_criteria:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: rating_criteria
-  reservation_criteria:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: reservation_criteria
-
 
 entities:
   - search_criteria
@@ -90,7 +81,6 @@ entities:
   - date_to_criteria
   - price_criteria
   - rating_criteria
-  - reservation_criteria
 
 responses:
   utter_greet:
