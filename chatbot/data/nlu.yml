@@ -78,15 +78,12 @@ nlu:
       - find toys for age group [6-8](age_group_criteria)
       - toys for age [8-10](age_group_criteria)
       - show toys for age [10-12](age_group_criteria)
-      - toys for age [4-6](age_group_criteria)
-      - toys for age [7-9](age_group_criteria)
+      - toys for age [6-9](age_group_criteria)
+      - toys for age [10+](age_group_criteria)
 
       - toys for [boys](target_group_criteria)
       - toys for [girls](target_group_criteria)
       - toys for [all](target_group_criteria)
-      - toys for [dečake](target_group_criteria)
-      - toys for [devojčice](target_group_criteria)
-      - toys for [sve](target_group_criteria)
 
       - toys produced between [1/1/2024](date_from_criteria) and [12/30/2024](date_to_criteria)
       - find toys produced between [01/05/2023](date_from_criteria) and [15/11/2023](date_to_criteria)
@@ -178,7 +175,79 @@ nlu:
       - toys from year [2022](date_year_criteria) for [boys](target_group_criteria) with rating [4](rating_criteria)
       - year [2023](date_year_criteria) toys under [5000](price_criteria)
 
-  
+  - intent: reserve_toy
+    examples: |
+      - reserve toy [Figura dinosaurusa](search_criteria)
+      - reserve toy name [Drvena slagalica životinje](search_criteria)
+      - reserve [Mala drvena slagalica](search_criteria)
+      - reserve [Velika plišana igračka](search_criteria)
+      - I want to reserve [Autić na daljinski](search_criteria)
+      - please reserve [Superheroj figura](search_criteria)
+      - reserve the toy [Edukativna slagalica](search_criteria)
+      - can you reserve [Drvena kocka sa slovima](search_criteria)
+      - reserve me [Drvena vozila set](search_criteria)
+      - add to cart [Superheroj figura](search_criteria)
+
+  - intent: reset_filter
+    examples: |
+      - reset filter
+      - clear filters
+      - remove all filters
+      - start over
+      - reset search
+
+  - regex: search_criteria
+    examples: |
+      - (?<=toy with name ).*
+      - (?<=find toy called ).*
+      - (?<=show me the toy ).*
+      - (?<=I want the toy ).*
+      - (?<=get details for ).*
+      - (?<=do you have ).*
+      - (?<=look for toy ).*
+      - (?<=search for ).*
+      - (?<=find ).*(?= toy)
+      - (?<=I’m looking for ).*
+      - (?<=show ).*
+      - (?<=get ).*(?= information)
+      - (?<=toy named ).*
+      - (?<=look up ).*
+      - (?<=do you sell ).*
+      - (?<=reserve toy named ).*
+      - (?<=reserve toy ).*
+      - (?<=reserve ).*
+      - (?<=I want to reserve ).*
+      - (?<=please reserve ).*
+      - (?<=can you reserve ).*
+      - (?<=reserve me ).*
+      - (?<=add to cart ).*
+
+  - regex: desc_criteria
+    examples: |
+      - (?<=with description )(.+?\.)(?= for | under | age | price |$)
+
+  - regex: date_from_criteria
+    examples: |
+      - (?<=produced between )\d{1,2}/\d{1,2}/\d{4}
+   
+  - regex: date_to_criteria
+    examples: |
+      - (?<=and )\d{1,2}/\d{1,2}/\d{4}
+
+  - regex: rating_criteria
+    examples: |
+      - (?<=rating\s)[1-5]\b
+      - (?<=rated\s)[1-5]\b
+
+  - regex: price_criteria
+    examples: |
+      - (?<=less than\s)\d{1,6}\b
+      - (?<=under\s)\d{1,6}\b
+      - (?<=below\s)\d{1,6}\b
+      - (?<=max\s)\d{1,6}\b
+      - (?<=price\s)\d{1,6}\b
+      - (?<=cost\s)\d{1,6}\b
+
   - lookup: type_criteria
     examples: |
       - slagalica
@@ -196,61 +265,14 @@ nlu:
     examples: |
       - 0-2
       - 3-5
-      - 4-6
-      - 6-8
-      - 7-9
-      - 8-10
-      - 10-12
+      - 6-9
+      - 10+
 
   - lookup: target_group_criteria
     examples: |
       - boys
       - girls
-      - all
-      - dečaci
-      - devojčice
-      - sve
-      - svi
-
- 
-  - synonym: boys
-    examples: |
-      - boy
-      - dečaci
-      - dečak
-
-  - synonym: girls
-    examples: |
-      - girl
-      - devojčice
-      - devojčica
-
-  - synonym: all
-    examples: |
-      - sve
-      - svi
-      - both
-
-  - intent: reserve_toy
-    examples: |
-      - reserve toy [Figura dinosaurusa](reservation_criteria)
-      - reserve toy name [Drvena slagalica životinje](reservation_criteria)
-      - reserve [Mala drvena slagalica](reservation_criteria)
-      - reserve [Velika plišana igračka](reservation_criteria)
-      - I want to reserve [Autić na daljinski](reservation_criteria)
-      - please reserve [Superheroj figura](reservation_criteria)
-      - reserve the toy [Edukativna slagalica](reservation_criteria)
-      - can you reserve [Drvena kocka sa slovima](reservation_criteria)
-      - reserve me [Drvena vozila set](reservation_criteria)
-      - add to cart [Superheroj figura](reservation_criteria)
-
-  - intent: reset_filter
-    examples: |
-      - reset filter
-      - clear filters
-      - remove all filters
-      - start over
-      - reset search
+      - for all
 
   - intent: goodbye
     examples: |
