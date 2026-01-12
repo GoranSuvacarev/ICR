@@ -72,17 +72,17 @@ def extract_number_from_text(text):
     if text is None:
         return None
 
-    # If it's already a number, return it
+   
     if isinstance(text, (int, float)):
         return text
 
-    # Convert to string
+   
     text = str(text)
 
-    # Try to find numbers in the text
+   
     numbers = re.findall(r'\d+', text)
     if numbers:
-        return int(numbers[-1])  # Return the last number found
+        return int(numbers[-1])  
 
     return None
 
@@ -99,7 +99,7 @@ class ActionFilterToys(Action):
         rsp = requests.get(url)
         toys = rsp.json()
 
-        # Get slots
+       
         desc = tracker.get_slot("desc_criteria")
         toy_type = tracker.get_slot("type_criteria")
         age_group = tracker.get_slot("age_group_criteria")
@@ -109,11 +109,11 @@ class ActionFilterToys(Action):
         price_raw = tracker.get_slot("price_criteria")
         rating_raw = tracker.get_slot("rating_criteria")
 
-        # Extract numbers from price and rating
+     
         price = extract_number_from_text(price_raw)
         rating = extract_number_from_text(rating_raw)
 
-        # Build filters dictionary
+       
         filters = {}
 
         if desc:
